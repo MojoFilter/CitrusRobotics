@@ -1,26 +1,51 @@
+#include <array>
+#include <map>
+#include <sstream>
+
 #include <Arduino.h>
 #include <BleGamepad.h>
-#include <map>
 
-#include "buffbee.h"
+//#include "buffbee.h"
+#include "talos.h"
 #include <TJpg_Decoder.h>
 #include "SPI.h"
 #include <TFT_eSPI.h>
 
-BleGamepad bleGamepad("BuffBee Control Panel", "Citrus Robotics Club", 100);
+BleGamepad bleGamepad("Talos Control Panel", "Citrus Robotics Club", 100);
 
 TFT_eSPI tft = TFT_eSPI();
 
 std::map<uint8_t, uint8_t> pinButtons{
   { 21, BUTTON_1 },
-  { 17, BUTTON_2},
-  { 15, BUTTON_3}
+  { 22, BUTTON_2},
+  { 17, BUTTON_3},
+
+  /* { 21, BUTTON_4 },
+  { 22, BUTTON_5},
+  { 17, BUTTON_6},
+
+  { 21, BUTTON_7 },
+  { 22, BUTTON_8},
+  { 17, BUTTON_9},
+
+  { 21, BUTTON_10 },
+  { 22, BUTTON_11},
+  { 17, BUTTON_12}, */
 };
 
 std::map<uint8_t, int> buttonStates{
   { BUTTON_1, HIGH },
   { BUTTON_2, HIGH },
-  { BUTTON_3, HIGH }
+  { BUTTON_3, HIGH },
+  /*{ BUTTON_4, HIGH },
+  { BUTTON_5, HIGH },
+  { BUTTON_6, HIGH },
+  { BUTTON_7, HIGH },
+  { BUTTON_8, HIGH },
+  { BUTTON_9, HIGH },
+  { BUTTON_10, HIGH },
+  { BUTTON_11, HIGH },
+  { BUTTON_12, HIGH },*/
 };
 
 void setup() {
@@ -52,8 +77,8 @@ void setupButtonPins() {
 
 void drawLogo() {
   uint16_t w = 0, h = 0;
-  TJpgDec.getJpgSize(&w, &h, buffbee, sizeof(buffbee));
-  TJpgDec.drawJpg(0, 0, buffbee, sizeof(buffbee));
+  TJpgDec.getJpgSize(&w, &h, logo, sizeof(logo));
+  TJpgDec.drawJpg(0, 0, logo, sizeof(logo));
 }
 
 bool tft_output(int16_t x, int16_t y, uint16_t w, uint16_t h, uint16_t* bitmap)
@@ -64,16 +89,17 @@ bool tft_output(int16_t x, int16_t y, uint16_t w, uint16_t h, uint16_t* bitmap)
   // This function will clip the image block rendering automatically at the TFT boundaries
   tft.pushImage(x, y, w, h, bitmap);
 
-  // This might work instead if you adapt the sketch to use the Adafruit_GFX library
-  // tft.drawRGBBitmap(x, y, bitmap, w, h);
-
   // Return 1 to decode next block
   return 1;
 }
 
 void updateButtons() {
+  std::stringstream buttonStateDebug;
+  Serial.println("Button Count: " + pinButtons.size());
+  buttonStateDebug << "( ";
   for (auto const& [pin, button] : pinButtons) {
     int currentButtonState = digitalRead(pin);
+    buttonStateDebug << currentButtonState << " ";
     int previousButtonState = buttonStates[button];
     if (currentButtonState != previousButtonState) {
       if (currentButtonState == LOW) {
@@ -84,4 +110,7 @@ void updateButtons() {
       buttonStates[button] = currentButtonState;
     }
   }
+  buttonStateDebug << ")";
+  std::string str = buttonStateDebug.str();
+  Serial.println(str.c_str());
 }
