@@ -233,7 +233,7 @@ Children:
         validators: null
         value:
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: left, type: DoubleSupplier,
-          value: () -> getJoystick1().getY()}
+          value: () -> -getJoystick1().getRawAxis(1)}
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: right, type: DoubleSupplier,
           value: () -> -getJoystick1().getRawAxis(5)}
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
@@ -266,9 +266,9 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: speed,
-            type: DoubleSupplier, value: () -> getJoystick1().getY()}
+            type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rotation,
-            type: DoubleSupplier, value: () -> getJoystick1().getRawAxis(4)}
+            type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(4)}
         Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
           name: Send to SmartDashboard, validators: null, value: true}
         Button: !!robotbuilder.data.properties.ChoicesProperty
@@ -354,9 +354,9 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: speed,
-            type: DoubleSupplier, value: () -> getJoystick1().getY()}
+            type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(1)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rotation,
-            type: DoubleSupplier, value: () -> getJoystick1().getX()}
+            type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(0)}
         Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
           name: Send to SmartDashboard, validators: null, value: true}
         Button: !!robotbuilder.data.properties.ChoicesProperty
@@ -399,7 +399,7 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: left,
-            type: DoubleSupplier, value: () -> getJoystick1().getY()}
+            type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: right,
             type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(5)}
         Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
@@ -496,7 +496,7 @@ Children:
         - !!robotbuilder.data.properties.ParameterSet
           name: gamepad
           parameters:
-          - {name: left, type: DoubleSupplier, value: () -> getJoystick1().getY()}
+          - {name: left, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
           - {name: right, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(5)}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
@@ -525,8 +525,13 @@ Children:
         - !!robotbuilder.data.properties.ParameterSet
           name: gamepad
           parameters:
-          - {name: speed, type: DoubleSupplier, value: () -> getJoystick1().getY()}
-          - {name: rotation, type: DoubleSupplier, value: () -> getJoystick1().getX()}
+          - {name: speed, type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(1)}
+          - {name: rotation, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(0)}
+        - !!robotbuilder.data.properties.ParameterSet
+          name: gamepadSplit
+          parameters:
+          - {name: speed, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
+          - {name: rotation, type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(4)}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
@@ -574,10 +579,10 @@ Properties:
       Number, validators: null, value: 9300}
   Export Subsystems: !!robotbuilder.data.properties.BooleanProperty {default: true,
     name: Export Subsystems, validators: null, value: true}
-  Wiring file location: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\FIRST\',
+  Wiring file location: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\jweeks\',
     extension: null, folder: true, name: Wiring file location, validators: null, value: 'C:\Users\FIRST\'}
-  Export Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\FIRST\FRCProjects',
-    extension: null, folder: true, name: Export Directory, validators: null, value: 'C:\Users\FIRST\Documents\CitrusRobotics\Olympians2023'}
+  Export Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\jweeks\FRCProjects',
+    extension: null, folder: true, name: Export Directory, validators: null, value: .\}
   Autonomous Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
     name: Autonomous Command, type: Command, validators: null, value: Autonomous Command}
 Base: Robot

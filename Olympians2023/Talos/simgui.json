@@ -7,6 +7,7 @@
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/Arcade 1 Stick Button": "Command",
       "/SmartDashboard/Arcade Drive: gamepad": "Command",
+      "/SmartDashboard/Arcade Drive: gamepadSplit": "Command",
       "/SmartDashboard/Arcade Split Drive Button": "Command",
       "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/Autonomous Command": "Command",
