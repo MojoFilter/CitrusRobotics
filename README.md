@@ -1,2 +1,2 @@
 # CitrusRobotics
-Citrus Robotics Club
+Citrus County Competitive Robotics Club
