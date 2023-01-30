@@ -133,10 +133,8 @@ gyro = new AnalogGyro(0);
         this.field = new Field2d();
         SmartDashboard.putData("Field", field);
         this.odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(), rightEncoder.getDistance());
-        SmartDashboard.putString(kDriveMode, "");
     }
 
-    private final String kDriveMode = "Drive Mode";
 
     @Override
     public void periodic() {
@@ -173,7 +171,6 @@ gyro = new AnalogGyro(0);
     }
 
     public void arcadeDrive(double speed, double rotation) {
-        SmartDashboard.putString(kDriveMode, "Arcade Drive");
         drive.arcadeDrive(speed, rotation);
     }
 

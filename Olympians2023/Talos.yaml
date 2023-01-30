@@ -269,6 +269,8 @@ Children:
             type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rotation,
             type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(4)}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: arcadeMode,
+            type: String, value: Split}
         Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
           name: Send to SmartDashboard, validators: null, value: true}
         Button: !!robotbuilder.data.properties.ChoicesProperty
@@ -357,6 +359,8 @@ Children:
             type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(1)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rotation,
             type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(0)}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: arcadeMode,
+            type: String, value: 1-Stick}
         Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
           name: Send to SmartDashboard, validators: null, value: true}
         Button: !!robotbuilder.data.properties.ChoicesProperty
@@ -513,6 +517,7 @@ Children:
         value:
         - !!robotbuilder.data.properties.ParameterDescriptor {name: speed, type: DoubleSupplier}
         - !!robotbuilder.data.properties.ParameterDescriptor {name: rotation, type: DoubleSupplier}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: arcadeMode, type: String}
       Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
         name: Run When Disabled, validators: null, value: false}
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
@@ -527,11 +532,13 @@ Children:
           parameters:
           - {name: speed, type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(1)}
           - {name: rotation, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(0)}
+          - {name: arcadeMode, type: String, value: 1-Stick}
         - !!robotbuilder.data.properties.ParameterSet
           name: gamepadSplit
           parameters:
           - {name: speed, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
           - {name: rotation, type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(4)}
+          - {name: arcadeMode, type: String, value: Split}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
