@@ -27,10 +27,16 @@
   },
   "NetworkTables": {
     "transitory": {
+      "LiveWindow": {
+        "open": true
+      },
       "Shuffleboard": {
         "open": true
       },
       "SmartDashboard": {
+        "Autonomous Command": {
+          "open": true
+        },
         "open": true
       }
     }

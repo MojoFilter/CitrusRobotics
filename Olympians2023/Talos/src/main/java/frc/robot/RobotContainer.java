@@ -107,8 +107,8 @@ tankDriveButton.onTrue(new TankDrive(() -> -getJoystick1().getRawAxis(1), () -> 
                         SmartDashboard.putData("Tank Drive Button",new TankDrive(() -> -getJoystick1().getRawAxis(1), () -> -getJoystick1().getRawAxis(5), m_driveTrain));
                         
 final JoystickButton arcade1StickButton = new JoystickButton(joystick1, 3);        
-arcade1StickButton.onTrue(new ArcadeDrive(() ->-getJoystick1().getRawAxis(1), () -> -getJoystick1().getRawAxis(0), "1-Stick", m_driveTrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-                        SmartDashboard.putData("Arcade 1 Stick Button",new ArcadeDrive(() ->-getJoystick1().getRawAxis(1), () -> -getJoystick1().getRawAxis(0), "1-Stick", m_driveTrain));
+arcade1StickButton.onTrue(new ArcadeDrive(() ->-getJoystick1().getRawAxis(3), () -> -getJoystick1().getRawAxis(2), "1-Stick", m_driveTrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+                        SmartDashboard.putData("Arcade 1 Stick Button",new ArcadeDrive(() ->-getJoystick1().getRawAxis(3), () -> -getJoystick1().getRawAxis(2), "1-Stick", m_driveTrain));
                         
 final JoystickButton twistButton = new JoystickButton(joystick1, 8);        
 twistButton.onTrue(new Twist( m_driveTrain ).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
