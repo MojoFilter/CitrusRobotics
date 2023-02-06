@@ -33,4 +33,10 @@ public final class Constants {
             public static final String DriveMode = "Drive Mode";
         }
     }
+
+    public static final class RumblePatterns {
+        public static final String ArcadeSplit = "B260:100 P260 B260:100";
+        public static final String Arcade1Stick = "B500:100";
+        public static final String TankDrive = "L500:75 R500:75";
+    }
 }

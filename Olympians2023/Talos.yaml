@@ -233,9 +233,9 @@ Children:
         validators: null
         value:
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: left, type: DoubleSupplier,
-          value: () -> -getJoystick1().getRawAxis(1)}
+          value: () -> -getXboxController1().getRawAxis(1)}
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: right, type: DoubleSupplier,
-          value: () -> -getJoystick1().getRawAxis(5)}
+          value: () -> -getXboxController1().getRawAxis(5)}
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Default Command, type: Command, validators: null, value: Tank Drive}
       Constants: !!robotbuilder.data.properties.ConstantsProperty
@@ -259,18 +259,20 @@ Children:
           validators: null
           value: CancelSelf
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
-          name: Joystick, validators: null, value: Joystick 1}
+          name: Joystick, validators: null, value: Xbox Controller 1}
         Parameters: !!robotbuilder.data.properties.ParametersProperty
           default: []
           name: Parameters
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: speed,
-            type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
+            type: DoubleSupplier, value: () -> -getXboxController1().getRawAxis(1)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rotation,
-            type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(4)}
+            type: DoubleSupplier, value: () ->-getXboxController1().getRawAxis(4)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: arcadeMode,
             type: String, value: Split}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rumblePattern,
+            type: String, value: 'B260:100 P260 B260:100'}
         Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
           name: Send to SmartDashboard, validators: null, value: true}
         Button: !!robotbuilder.data.properties.ChoicesProperty
@@ -308,7 +310,7 @@ Children:
           validators: null
           value: CancelSelf
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
-          name: Joystick, validators: null, value: Joystick 1}
+          name: Joystick, validators: null, value: Xbox Controller 1}
         Parameters: !!robotbuilder.data.properties.ParametersProperty
           default: []
           name: Parameters
@@ -349,18 +351,20 @@ Children:
           validators: null
           value: CancelSelf
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
-          name: Joystick, validators: null, value: Joystick 1}
+          name: Joystick, validators: null, value: Xbox Controller 1}
         Parameters: !!robotbuilder.data.properties.ParametersProperty
           default: []
           name: Parameters
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: speed,
-            type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(1)}
+            type: DoubleSupplier, value: () ->-getXboxController1().getRawAxis(1)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rotation,
-            type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(0)}
+            type: DoubleSupplier, value: () -> -getXboxController1().getRawAxis(0)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: arcadeMode,
             type: String, value: 1-Stick}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rumblePattern,
+            type: String, value: 'B500:100'}
         Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
           name: Send to SmartDashboard, validators: null, value: true}
         Button: !!robotbuilder.data.properties.ChoicesProperty
@@ -396,16 +400,16 @@ Children:
           validators: null
           value: CancelSelf
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
-          name: Joystick, validators: null, value: Joystick 1}
+          name: Joystick, validators: null, value: Xbox Controller 1}
         Parameters: !!robotbuilder.data.properties.ParametersProperty
           default: []
           name: Parameters
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: left,
-            type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
+            type: DoubleSupplier, value: () -> -getXboxController1().getRawAxis(1)}
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: right,
-            type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(5)}
+            type: DoubleSupplier, value: () -> -getXboxController1().getRawAxis(5)}
         Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
           name: Send to SmartDashboard, validators: null, value: true}
         Button: !!robotbuilder.data.properties.ChoicesProperty
@@ -434,20 +438,20 @@ Children:
       Name: Tank Drive Button
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: &id016 ['0', '1', '2', '3', '4', '5']
+        choices: ['0', '1', '2', '3', '4', '5']
         default: 1
         name: Number
-        validators: &id017 [Joystick]
+        validators: [Joystick]
         value: '0'
-    Base: Joystick
-    Name: Joystick 1
+    Base: Xbox Controller
+    Name: Xbox Controller 1
   - Children: []
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: *id016
+        choices: ['0', '1', '2', '3', '4', '5']
         default: 1
         name: Number
-        validators: *id017
+        validators: [Joystick]
         value: '1'
     Base: Joystick
     Name: Joystick 2
@@ -500,8 +504,8 @@ Children:
         - !!robotbuilder.data.properties.ParameterSet
           name: gamepad
           parameters:
-          - {name: left, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
-          - {name: right, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(5)}
+          - {name: left, type: DoubleSupplier, value: () -> -getXboxController1().getRawAxis(1)}
+          - {name: right, type: DoubleSupplier, value: () -> -getXboxController1().getRawAxis(5)}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
@@ -518,6 +522,8 @@ Children:
         - !!robotbuilder.data.properties.ParameterDescriptor {name: speed, type: DoubleSupplier}
         - !!robotbuilder.data.properties.ParameterDescriptor {name: rotation, type: DoubleSupplier}
         - !!robotbuilder.data.properties.ParameterDescriptor {name: arcadeMode, type: String}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: rumblePattern,
+          type: String}
       Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
         name: Run When Disabled, validators: null, value: false}
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
@@ -530,15 +536,17 @@ Children:
         - !!robotbuilder.data.properties.ParameterSet
           name: gamepad
           parameters:
-          - {name: speed, type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(1)}
-          - {name: rotation, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(0)}
+          - {name: speed, type: DoubleSupplier, value: () ->-getXboxController1().getRawAxis(1)}
+          - {name: rotation, type: DoubleSupplier, value: () -> -getXboxController1().getRawAxis(0)}
           - {name: arcadeMode, type: String, value: 1-Stick}
+          - {name: rumblePattern, type: String, value: 'B500:100'}
         - !!robotbuilder.data.properties.ParameterSet
           name: gamepadSplit
           parameters:
-          - {name: speed, type: DoubleSupplier, value: () -> -getJoystick1().getRawAxis(1)}
-          - {name: rotation, type: DoubleSupplier, value: () ->-getJoystick1().getRawAxis(4)}
+          - {name: speed, type: DoubleSupplier, value: () -> -getXboxController1().getRawAxis(1)}
+          - {name: rotation, type: DoubleSupplier, value: () ->-getXboxController1().getRawAxis(4)}
           - {name: arcadeMode, type: String, value: Split}
+          - {name: rumblePattern, type: String, value: 'B260:100 P260 B260:100'}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
