@@ -245,6 +245,34 @@ Children:
         value: []
     Base: Subsystem
     Name: Drive Train
+  - Children: []
+    Properties:
+      Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Send to SmartDashboard, validators: null, value: true}
+      Default command parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Default command parameters
+        validators: null
+        value: []
+      Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Default Command, type: Command, validators: null, value: None}
+      Constants: !!robotbuilder.data.properties.ConstantsProperty
+        default: []
+        name: Constants
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: Startup_Trigger,
+          type: int, value: '3'}
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: TankDrive_Trigger,
+          type: int, value: '4'}
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: Arcade1Stick_Trigger,
+          type: int, value: '5'}
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: ArcadeSplit_Trigger,
+          type: int, value: '3'}
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: Trigger_Delay,
+          type: double, value: '0.25'}
+    Base: Subsystem
+    Name: Sound Board
   Properties: {}
   Base: Subsystems
   Name: Subsystems
@@ -573,6 +601,28 @@ Children:
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Sequential Command Group
     Name: Twist
+  - Children: []
+    Properties:
+      Autonomous Selection: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Autonomous Selection, validators: null, value: false}
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value: []
+      Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Run When Disabled, validators: null, value: false}
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: Sound Board}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: &id016 []
+        name: Parameter presets
+        validators: null
+        value: *id016
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: true}
+    Base: Instant Command
+    Name: Play Startup Command
   Properties: {}
   Base: Commands
   Name: Commands

@@ -61,7 +61,14 @@ public class ArcadeDrive extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.getInstance().rumble(m_rumblePattern);
+        RobotContainer rob = RobotContainer.getInstance();
+        rob.rumble(m_rumblePattern);
+        if (m_arcadeMode.equalsIgnoreCase("split")) {
+            rob.playArcadeSplit();
+        }
+        else {
+            rob.playArcade1Stick();
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
