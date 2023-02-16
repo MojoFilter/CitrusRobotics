@@ -10,6 +10,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -29,9 +31,27 @@ public final class Constants {
         public static final int EncoderCPR = 1024;
         public static final double EncoderDistancePerPulse = (WheelDiameterMeters * Math.PI) / (double) EncoderCPR;
 
+        public static final double TrackWidhMeters = 0.69;
+        public static final DifferentialDriveKinematics DriveKinematics = new DifferentialDriveKinematics(TrackWidhMeters);
+
+        // THESE VALUES ARE BOGUS AND ONLY HERE FOR SIMULATION. SHOULD NOT BE USED ON LIVE ROBOT
+        // Real values should be determined using the Robot Characterization Toolsuite
+        public static final double StaticGainVolts = 0.22;
+        public static final double VelocityGainVolts = 1.98;
+        public static final double AccelerationGainVolts = 0.2;
+        public static final double PDriveVelocity = 8.5;
+
         public static final class SmartDashboard {
             public static final String DriveMode = "Drive Mode";
         }
+    }
+
+    public static final class Auto {
+        public static final double MaxSpeedMetersPerSecond = 3;
+        public static final double MaxAccelerationMetersPerSecondSquared = 1;
+
+        public static final double RamseteB = 2;
+        public static final double RamseteZ = 0.7;
     }
 
     public static final class RumblePatterns {

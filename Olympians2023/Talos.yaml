@@ -262,13 +262,13 @@ Children:
         validators: null
         value:
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: Startup_Trigger,
-          type: int, value: '3'}
+          type: int, value: '9'}
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: TankDrive_Trigger,
-          type: int, value: '4'}
+          type: int, value: '8'}
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: Arcade1Stick_Trigger,
-          type: int, value: '5'}
+          type: int, value: '7'}
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: ArcadeSplit_Trigger,
-          type: int, value: '3'}
+          type: int, value: '6'}
         - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: Trigger_Delay,
           type: double, value: '0.25'}
     Base: Subsystem
@@ -464,6 +464,49 @@ Children:
           value: onTrue
       Base: Joystick Button
       Name: Tank Drive Button
+    - Children: []
+      Properties:
+        Interruptible: !!robotbuilder.data.properties.ChoicesProperty
+          choices: [CancelSelf, CancelIncoming]
+          default: CancelSelf
+          name: Interruptible
+          validators: null
+          value: CancelSelf
+        Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
+          name: Joystick, validators: null, value: Xbox Controller 1}
+        Parameters: !!robotbuilder.data.properties.ParametersProperty
+          default: []
+          name: Parameters
+          validators: null
+          value:
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: pathName,
+            type: String, value: Park}
+        Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
+          name: Send to SmartDashboard, validators: null, value: false}
+        Button: !!robotbuilder.data.properties.ChoicesProperty
+          choices: [A, B, X, Y, Back, Start, LeftBumper, RightBumper, LeftStick, RightStick]
+          default: A
+          name: Button
+          validators: null
+          value: Y
+        Command: !!robotbuilder.data.properties.TypeSelectionProperty
+          default: None
+          name: Command
+          type: Command
+          validators: [TypeDropdownSelected]
+          value: Execute Path Command
+        Timeout: !!robotbuilder.data.properties.PositiveDoubleProperty {default: 0,
+          name: Timeout, validators: null, value: 0.0}
+        Add Timeout: !!robotbuilder.data.properties.BooleanProperty {default: false,
+          name: Add Timeout, validators: null, value: false}
+        When to Run: !!robotbuilder.data.properties.ChoicesProperty
+          choices: [onTrue, onFalse, whileTrue, whileFalse, toggleOnTrue, toggleOnFalse]
+          default: onTrue
+          name: When to Run
+          validators: null
+          value: onTrue
+      Base: Xbox Button
+      Name: Park Button
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
         choices: ['0', '1', '2', '3', '4', '5']
@@ -490,7 +533,7 @@ Children:
   - Children: []
     Properties:
       Autonomous Selection: !!robotbuilder.data.properties.BooleanProperty {default: false,
-        name: Autonomous Selection, validators: null, value: false}
+        name: Autonomous Selection, validators: null, value: true}
       Parameters: !!robotbuilder.data.properties.ParametersProperty
         default: []
         name: Parameters
@@ -499,7 +542,7 @@ Children:
       Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
         name: Run When Disabled, validators: null, value: false}
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Requires, type: Subsystem, validators: null, value: None}
+        name: Requires, type: Subsystem, validators: null, value: Drive Train}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
         default: []
         name: Parameter presets
@@ -507,7 +550,7 @@ Children:
         value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
-    Base: Command
+    Base: Sequential Command Group
     Name: Autonomous Command
   - Children: []
     Properties:
@@ -615,14 +658,45 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Sound Board}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id016 []
+        default: []
+        name: Parameter presets
+        validators: null
+        value: []
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: true}
+    Base: Instant Command
+    Name: Play Startup Command
+  - Children: []
+    Properties:
+      Autonomous Selection: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Autonomous Selection, validators: null, value: false}
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: pathName, type: String}
+      Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Run When Disabled, validators: null, value: false}
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: Drive Train}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: &id016
+        - !!robotbuilder.data.properties.ParameterSet
+          name: Park
+          parameters:
+          - {name: pathName, type: String, value: Park}
+        - !!robotbuilder.data.properties.ParameterSet
+          name: Test
+          parameters:
+          - {name: pathName, type: String, value: Test Path}
         name: Parameter presets
         validators: null
         value: *id016
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
-    Base: Instant Command
-    Name: Play Startup Command
+    Base: Sequential Command Group
+    Name: Execute Path Command
   Properties: {}
   Base: Commands
   Name: Commands
