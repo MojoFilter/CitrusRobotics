@@ -31,6 +31,8 @@ public final class Constants {
         public static final int EncoderCPR = 1024;
         public static final double EncoderDistancePerPulse = (WheelDiameterMeters * Math.PI) / (double) EncoderCPR;
 
+        public static final double DefaultSpeedGovernor = 0.5;
+
         public static final double TrackWidhMeters = 0.69;
         public static final DifferentialDriveKinematics DriveKinematics = new DifferentialDriveKinematics(TrackWidhMeters);
 
