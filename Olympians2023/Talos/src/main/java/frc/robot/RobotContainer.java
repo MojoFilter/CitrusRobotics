@@ -213,6 +213,6 @@ public class RobotContainer {
   }
 
   public double getSpeedGovernor() {
-    return this.speedGovernorSource.getDouble(Constants.DriveTrain.DefaultSpeedGovernor);
+    return this.getXboxController1().getRightTriggerAxis() > 0.9 ? 1.0 : this.speedGovernorSource.getDouble(Constants.DriveTrain.DefaultSpeedGovernor);
   }
 }
