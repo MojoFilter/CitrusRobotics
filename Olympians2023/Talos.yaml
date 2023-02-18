@@ -232,12 +232,16 @@ Children:
         name: Default command parameters
         validators: null
         value:
-        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: left, type: DoubleSupplier,
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: speed, type: DoubleSupplier,
           value: () -> -getXboxController1().getRawAxis(1)}
-        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: right, type: DoubleSupplier,
-          value: () -> -getXboxController1().getRawAxis(5)}
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rotation,
+          type: DoubleSupplier, value: () ->-getXboxController1().getRawAxis(4)}
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: arcadeMode,
+          type: String, value: Split}
+        - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: rumblePattern,
+          type: String, value: 'B260:100 P260 B260:100'}
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Default Command, type: Command, validators: null, value: Tank Drive}
+        name: Default Command, type: Command, validators: null, value: Arcade Drive}
       Constants: !!robotbuilder.data.properties.ConstantsProperty
         default: []
         name: Constants
@@ -675,9 +679,9 @@ Properties:
       Number, validators: null, value: 9300}
   Export Subsystems: !!robotbuilder.data.properties.BooleanProperty {default: true,
     name: Export Subsystems, validators: null, value: true}
-  Wiring file location: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\FIRST\',
+  Wiring file location: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\jweeks\',
     extension: null, folder: true, name: Wiring file location, validators: null, value: 'C:\Users\FIRST\'}
-  Export Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\FIRST\FRCProjects',
+  Export Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\jweeks\FRCProjects',
     extension: null, folder: true, name: Export Directory, validators: null, value: .\}
   Autonomous Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
     name: Autonomous Command, type: Command, validators: null, value: Autonomous Command}
