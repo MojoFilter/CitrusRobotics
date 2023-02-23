@@ -118,6 +118,12 @@ public class RobotContainer {
     driveTab.add(m_driveTrain.getDrive())
         .withPosition(0, 2);
 
+    /*
+     * driveTab.add("Field Approximation", m_driveTrain.getFieldApproximation())
+     * .withSize(6,4)
+     * .withPosition(3, 4);
+     */
+
     Command arcadeSplitCommand = new ArcadeDrive(
         () -> -getXboxController1().getRawAxis(1),
         () -> -getXboxController1().getRawAxis(4),

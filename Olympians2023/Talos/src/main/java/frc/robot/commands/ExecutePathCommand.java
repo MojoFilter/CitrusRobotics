@@ -47,8 +47,6 @@ public class ExecutePathCommand extends SequentialCommandGroup {
     }
 
     private Command buildAutoPath(DriveTrain drive, String pathName) {
-
-        // An example trajectory to follow. All units in meters.
         Trajectory trajectory = PathPlanner.loadPath(pathName, new PathConstraints(
                 Constants.Auto.MaxSpeedMetersPerSecond, Constants.Auto.MaxAccelerationMetersPerSecondSquared));
 
