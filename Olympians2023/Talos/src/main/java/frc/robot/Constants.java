@@ -52,12 +52,20 @@ public final class Constants {
     }
 
     public static final class Vision {
+        public static final String TargetCameraName = "TargetCam";
         public static final double TargetCameraOffsetMetersX = 1;
         public static final double TargetCameraOffsetMetersY = 1;
         public static final double TargetCameraOffsetMetersZ = 1;
         public static final double TargetCameraRoll = 0;
         public static final double TargetCameraPitch = 0;
         public static final double TargetCameraYaw = Math.PI / 2.0;
+        public static final double TargetCameraFOVDegrees = 75.0;
+        public static final double TargetCameraMaxLedRangeMeters = 20; // Not really relevant
+
+        // these are all in pixels
+        public static final int TargetCameraResolutionWidth = 640;
+        public static final int TargetCameraResolutionHeight = 480;
+        public static final double TargetCameraMinTargetArea = 10; // square pixels
 
         public static final Translation3d TargetCameraPosition =
             new Translation3d(TargetCameraOffsetMetersX, TargetCameraOffsetMetersY, TargetCameraOffsetMetersZ);
