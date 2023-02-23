@@ -10,6 +10,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 /**
@@ -46,6 +49,25 @@ public final class Constants {
         public static final class SmartDashboard {
             public static final String DriveMode = "Drive Mode";
         }
+    }
+
+    public static final class Vision {
+        public static final double TargetCameraOffsetMetersX = 1;
+        public static final double TargetCameraOffsetMetersY = 1;
+        public static final double TargetCameraOffsetMetersZ = 1;
+        public static final double TargetCameraRoll = 0;
+        public static final double TargetCameraPitch = 0;
+        public static final double TargetCameraYaw = Math.PI / 2.0;
+
+        public static final Translation3d TargetCameraPosition =
+            new Translation3d(TargetCameraOffsetMetersX, TargetCameraOffsetMetersY, TargetCameraOffsetMetersZ);
+        
+        public static final Rotation3d TargetCameraRotation =
+            new Rotation3d(TargetCameraPitch, TargetCameraRoll, TargetCameraYaw);
+        
+        public static final Transform3d RobotToTargetCamera = 
+            new Transform3d(TargetCameraPosition, TargetCameraRotation);
+        
     }
 
     public static final class Auto {
