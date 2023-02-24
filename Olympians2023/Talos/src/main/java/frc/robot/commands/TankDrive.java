@@ -69,7 +69,6 @@ public class TankDrive extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putString(Constants.DriveTrain.SmartDashboard.DriveMode, "Tank Drive");
         m_driveTrain.drive(m_left.getAsDouble(), m_right.getAsDouble());
     }
 

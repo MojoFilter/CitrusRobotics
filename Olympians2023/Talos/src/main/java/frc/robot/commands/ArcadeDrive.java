@@ -74,7 +74,6 @@ public class ArcadeDrive extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putString(Constants.DriveTrain.SmartDashboard.DriveMode, "Arcade " + m_arcadeMode);
         m_driveTrain.arcadeDrive(m_speed.getAsDouble(), m_rotation.getAsDouble());
     }
 

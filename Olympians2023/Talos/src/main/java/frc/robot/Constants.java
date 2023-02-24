@@ -46,9 +46,7 @@ public final class Constants {
         public static final double AccelerationGainVolts = 0.2;
         public static final double PDriveVelocity = 8.5;
 
-        public static final class SmartDashboard {
-            public static final String DriveMode = "Drive Mode";
-        }
+        public static final double GyroSensitivity = 0.007;        
     }
 
     public static final class Vision {
@@ -90,5 +88,19 @@ public final class Constants {
         public static final String ArcadeSplit = "B260:100 P260 B260:100";
         public static final String Arcade1Stick = "B500:100";
         public static final String TankDrive = "L500:75 R500:75";
+    }
+
+    public static final class Dashboard {
+        public static String DriveTabName = "Drive";
+        public static final String DriveModeTitle = "Drive Mode";
+        public static final class DriveModeOptions {
+            public static final String ArcadeSplit = "Arcade Split";
+            public static final String Arcade1Stick = "Arcade 1-Stick";
+            public static final String Tank = "Tank Drive";
+        }
+        public static final String SpeedGovernorTitle = "Speed Governor";
+        public static final String TargetCameraTitle = "Target Camera";
+        public static final String TargetCameraName = "TargetCam";
+        public static final String[] TargetCameraUrls = {"http://photonvision.local/"};
     }
 }
