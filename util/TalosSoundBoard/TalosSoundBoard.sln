@@ -3,12 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33103.201
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalosSoundBoardServer", "TalosSoundBoardServer\TalosSoundBoardServer.csproj", "{5EAADFB4-2FD1-40AC-816B-25F5BC5B84A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TalosSoundBoardServer", "TalosSoundBoardServer\TalosSoundBoardServer.csproj", "{5EAADFB4-2FD1-40AC-816B-25F5BC5B84A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{17146A46-D78F-4617-A3C3-57AA877F7B6F}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TalosSoundBoard", "TalosSoundBoard\TalosSoundBoard.csproj", "{C4F0DF4B-3D3B-4AAF-91CB-DFACA98204AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalosSoundBoardService", "TalosSoundBoardService\TalosSoundBoardService.csproj", "{F2B31BF8-42B1-4D63-81B3-D13CC5B8625B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +24,14 @@ Global
 		{5EAADFB4-2FD1-40AC-816B-25F5BC5B84A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EAADFB4-2FD1-40AC-816B-25F5BC5B84A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EAADFB4-2FD1-40AC-816B-25F5BC5B84A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4F0DF4B-3D3B-4AAF-91CB-DFACA98204AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4F0DF4B-3D3B-4AAF-91CB-DFACA98204AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4F0DF4B-3D3B-4AAF-91CB-DFACA98204AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4F0DF4B-3D3B-4AAF-91CB-DFACA98204AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B31BF8-42B1-4D63-81B3-D13CC5B8625B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B31BF8-42B1-4D63-81B3-D13CC5B8625B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B31BF8-42B1-4D63-81B3-D13CC5B8625B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B31BF8-42B1-4D63-81B3-D13CC5B8625B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

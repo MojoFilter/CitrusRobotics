@@ -1,0 +1,62 @@
+using Microsoft.Extensions.Options;
+using System.Media;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<SoundBoardSettings>(builder.Configuration.GetSection("sfx"));
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+var playerMap = app.Services.GetRequiredService<IOptions<SoundBoardSettings>>().Value.Clips!
+    .ToDictionary(
+    clip => clip.FileName!, 
+    clip => new SoundPlayer($"sfx/{clip.FileName}.wav"));
+
+foreach (var player in playerMap.Values)
+{
+    player.LoadAsync();
+}
+
+app.MapGet("/list", (IOptions<SoundBoardSettings> boardSettings) => boardSettings.Value.Clips);
+app.MapGet("/Play", (string fileName) =>
+{
+    if (playerMap.TryGetValue(fileName, out var player))
+    {
+        player.Play();
+        return Results.Ok();
+    }   
+    else
+    {
+        return Results.NotFound(fileName);
+    }
+});
+
+app.Run();
+
+internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+{
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}
+
+internal class Clip
+{
+    public string? Title { get; set; }
+    public string? FileName { get; set; }
+}
+
+internal class SoundBoardSettings
+{
+    public IEnumerable<Clip>? Clips { get; set; }
+}
