@@ -10,6 +10,13 @@
 #include <TJpg_Decoder.h>
 #include "SPI.h"
 #include <TFT_eSPI.h>
+#include <SoftwareSerial.h>
+
+#define AUDIO_TRIGGER_PIN 13
+#define PRESS_DELAY 250
+
+#define SOUNDBOARD_TX 21
+#define SOUNDBOARD_RX 22
 
 BleGamepad bleGamepad("Talos Control Panel", "Citrus Robotics Club", 100);
 
@@ -48,9 +55,13 @@ std::map<uint8_t, int> buttonStates{
   { BUTTON_12, HIGH },*/
 };
 
+SoftwareSerial soundboardSerial(SOUNDBOARD_RX, SOUNDBOARD_TX);
+
 void setup() {
   Serial.begin(115200);
   
+  setupSound(AUDIO_TRIGGER_PIN);
+
   setupButtonPins();
   bleGamepad.begin();
 
@@ -61,12 +72,14 @@ void setup() {
   TJpgDec.setCallback(tft_output);
 
   drawLogo();
+
+  //soundboardSerial.begin()
 }
 
 void loop() {
-  if (bleGamepad.isConnected()) {
+  //if (bleGamepad.isConnected()) {
     updateButtons();
-  }
+  //}
 }
 
 void setupButtonPins() {
@@ -103,9 +116,12 @@ void updateButtons() {
     int previousButtonState = buttonStates[button];
     if (currentButtonState != previousButtonState) {
       if (currentButtonState == LOW) {
-        bleGamepad.press(button);
-      } else {
-        bleGamepad.release(button);
+        if (bleGamepad.isConnected()) {
+          bleGamepad.press(button);
+        }
+        activateSound(AUDIO_TRIGGER_PIN);
+      } else if (bleGamepad.isConnected()) {
+          bleGamepad.release(button);
       }
       buttonStates[button] = currentButtonState;
     }
@@ -113,4 +129,15 @@ void updateButtons() {
   buttonStateDebug << ")";
   std::string str = buttonStateDebug.str();
   Serial.println(str.c_str());
+}
+
+void setupSound(int pin) {
+  pinMode(pin, OUTPUT);
+  digitalWrite(pin, HIGH);
+}
+
+void activateSound(int pin) {
+  digitalWrite(pin, LOW);
+  delay(PRESS_DELAY);
+  digitalWrite(pin, HIGH);
 }
