@@ -76,6 +76,10 @@ public final class Constants {
         
     }
 
+    public static final class SoundBoard {
+        public static String StartupFileName = "ready_to_roll.ogg";
+    }
+
     public static final class Auto {
         public static final double MaxSpeedMetersPerSecond = 3;
         public static final double MaxAccelerationMetersPerSecondSquared = 1;
