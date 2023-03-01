@@ -26,6 +26,7 @@ import frc.robot.commands.TankDrive;
 import frc.robot.commands.Twist;
 import frc.robot.subsystems.DashboardManager;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.HardwareTriggerSoundBoard;
 import frc.robot.subsystems.SoundBoard;
 import frc.robot.util.Rumbler;
 
@@ -150,6 +151,8 @@ public class RobotContainer {
     m_soundBoard.reset();
     if (announce) {
       new PlayStartupCommand(m_soundBoard).schedule();
+    } else {
+      m_soundBoard.clear();
     }
   }
 
