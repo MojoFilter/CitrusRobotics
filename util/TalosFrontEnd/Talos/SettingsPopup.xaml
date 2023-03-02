@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Talos.SettingsPopup">
+    <Border Padding="12"
+            BackgroundColor="DimGray"
+            StrokeThickness="2"
+            Stroke="#C49B33">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="40,0,0,40" />
+        </Border.StrokeShape>
+        <VerticalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Host"
+                       Margin="12,12,6,12"/>
+                <Picker x:Name="hostPicker"
+                        Title="Host"
+                        WidthRequest="150"/>
+            </HorizontalStackLayout>
+            <Button HorizontalOptions="End"
+                    Margin="6,12,12,12"
+                    Text="Save"
+                    Clicked="Button_Clicked"/>
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

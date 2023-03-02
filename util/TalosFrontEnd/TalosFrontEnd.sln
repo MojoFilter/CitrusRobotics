@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33103.201
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MojoFilter.Frc.NetworkTables.Client", "..\MojoFilter.Frc.NetworkTables.Client\MojoFilter.Frc.NetworkTables.Client\MojoFilter.Frc.NetworkTables.Client.csproj", "{BE74F6AE-8976-4017-97EB-A4460EA24A69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Talos", "Talos\Talos.csproj", "{1BEA0AA7-76E1-4143-B617-FD3078C41A68}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE74F6AE-8976-4017-97EB-A4460EA24A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE74F6AE-8976-4017-97EB-A4460EA24A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE74F6AE-8976-4017-97EB-A4460EA24A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE74F6AE-8976-4017-97EB-A4460EA24A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BEA0AA7-76E1-4143-B617-FD3078C41A68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BEA0AA7-76E1-4143-B617-FD3078C41A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BEA0AA7-76E1-4143-B617-FD3078C41A68}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1BEA0AA7-76E1-4143-B617-FD3078C41A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BEA0AA7-76E1-4143-B617-FD3078C41A68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BEA0AA7-76E1-4143-B617-FD3078C41A68}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7B150F5-E5C7-4A6A-9BA1-1BBFA0F72F78}
+	EndGlobalSection
+EndGlobal

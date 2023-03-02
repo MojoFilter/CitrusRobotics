@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="107.06106mm"
+   height="53.974998mm"
+   viewBox="0 0 107.06106 53.974998"
+   version="1.1"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1158">
+      <rect
+         style="fill:none;stroke-width:0.264583"
+         id="rect1160"
+         width="124.06329"
+         height="63.622196"
+         x="50.608566"
+         y="69.984421" />
+    </clipPath>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-57.944428,-71.742751)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.4px;font-family:'Dalek Pinpoint';-inkscape-font-specification:'Dalek Pinpoint Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#550000;stroke-width:0.264583"
+       x="110.77647"
+       y="93.408951"
+       id="text113"
+       clip-path="url(#clipPath1158)"><tspan
+         id="tspan111"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.4px;font-family:'Dalek Pinpoint';-inkscape-font-specification:'Dalek Pinpoint Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#550000;stroke-width:0.264583"
+         x="110.77647"
+         y="93.408951">Citrus</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.4px;font-family:'Dalek Pinpoint';-inkscape-font-specification:'Dalek Pinpoint Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#550000;stroke-width:0.264583"
+         x="110.77647"
+         y="125.15895"
+         id="tspan115">Robotics</tspan></text>
+  </g>
+</svg>
