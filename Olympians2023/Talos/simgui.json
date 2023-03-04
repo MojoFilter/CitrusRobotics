@@ -1,0 +1,33 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Drive/Drive": "DifferentialDrive",
+      "/Shuffleboard/Drive/Drive Mode": "String Chooser",
+      "/Shuffleboard/Drive/Field": "Field2d",
+      "/Shuffleboard/Drive/Gyro": "Gyro",
+      "/SmartDashboard/Auto Mode": "String Chooser",
+      "/SmartDashboard/DriveTrain": "Subsystem",
+      "/SmartDashboard/Play Startup Command": "Command",
+      "/SmartDashboard/SoundBoard": "Subsystem",
+      "/SmartDashboard/TargetCam Sim Field": "Field2d",
+      "/SmartDashboard/Twist": "Command"
+    },
+    "windows": {
+      "/Shuffleboard/Drive/Field": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Talos@1": {
+      "open": true
+    },
+    "visible": true
+  }
+}

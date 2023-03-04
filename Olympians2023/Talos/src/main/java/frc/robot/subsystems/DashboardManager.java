@@ -50,12 +50,17 @@ public class DashboardManager extends SubsystemBase {
         driveTab.add(driveTrain.getDrive())
                 .withPosition(6, 2);
 
+                /*
         driveTab.addCamera(
             Constants.Dashboard.TargetCameraTitle,
             Constants.Dashboard.TargetCameraName,
             Constants.Dashboard.TargetCameraUrls);
-
-        Shuffleboard.selectTab(Constants.Dashboard.DriveTabName);
+            */
+        driveTab.addCamera(
+            Constants.Dashboard.DriveCameraTitle,
+            Constants.Dashboard.DriveCameraName,
+            Constants.Dashboard.DriveCameraUrls).withPosition(8, 0); 
+        //Shuffleboard.selectTab(Constants.Dashboard.DriveTabName);
     }
 
     public double getSpeedGovernor() {
