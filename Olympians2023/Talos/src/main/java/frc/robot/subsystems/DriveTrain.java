@@ -222,9 +222,8 @@ public class DriveTrain extends SubsystemBase {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public void drive(double leftSpeed, double rightSpeed) {
-        var sg = RobotContainer.getInstance().getSpeedGovernor();
-        drive.tankDrive(leftSpeed * sg, rightSpeed * sg);
+    public void tankDrive(double leftSpeed, double rightSpeed) {
+        drive.tankDrive(leftSpeed, rightSpeed);
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -234,8 +233,11 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void arcadeDrive(double speed, double rotation) {
-        var sg = RobotContainer.getInstance().getSpeedGovernor();
-        drive.arcadeDrive(speed * sg, rotation * sg);
+        drive.arcadeDrive(speed, rotation);
+    }
+
+    public void curvatureDrive(double speed, double rotation) {
+        this.drive.curvatureDrive(speed, rotation, false);
     }
 
     /**

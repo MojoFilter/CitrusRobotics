@@ -10,13 +10,13 @@ import frc.robot.subsystems.DriveTrain;
 /**
  *
  */
-public class Twist extends SequentialCommandGroup {
+public class TwistCommand extends SequentialCommandGroup {
 
     private static final double TWIST_SPEED = 0.75;
     private static final double TWIST_DURATION = 0.25; // seconds
     private static final double PAUSE_DURATION = 0.25; // seconds
 
-    public Twist(DriveTrain driveTrain){
+    public TwistCommand(DriveTrain driveTrain){
         addCommands(
                 spinLeft(TWIST_DURATION / 2.0, driveTrain),
                 Commands.waitSeconds(PAUSE_DURATION),
@@ -41,6 +41,6 @@ public class Twist extends SequentialCommandGroup {
     }
 
     private Command spin(double leftSpeed, double rightSpeed, double seconds, DriveTrain driveTrain) {
-        return new TankDrive(leftSpeed, rightSpeed, driveTrain).withTimeout(seconds);
+        return new TankDriveCommand(leftSpeed, rightSpeed, driveTrain).withTimeout(seconds);
     }
 }
