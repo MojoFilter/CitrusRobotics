@@ -50,12 +50,12 @@ public class DashboardManager extends SubsystemBase {
         driveTab.add(driveTrain.getDrive())
                 .withPosition(6, 2);
 
-                /*
+                
         driveTab.addCamera(
             Constants.Dashboard.TargetCameraTitle,
             Constants.Dashboard.TargetCameraName,
             Constants.Dashboard.TargetCameraUrls);
-            */
+            
         driveTab.addCamera(
             Constants.Dashboard.DriveCameraTitle,
             Constants.Dashboard.DriveCameraName,

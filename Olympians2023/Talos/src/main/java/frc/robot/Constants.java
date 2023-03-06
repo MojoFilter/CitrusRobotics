@@ -108,6 +108,6 @@ public final class Constants {
         public static final String DriveCameraTitle = "Drive Camera";
         public static final String DriveCameraName = "DriveCam";
         public static final String[] DriveCameraUrls= {"http://10.93.0.2:1181/stream.mjpg"};
-        public static final String[] TargetCameraUrls = {"http://photonvision.local/"};
+        public static final String[] TargetCameraUrls = {"http://photonvision:1184/stream.mjpg"};
     }
 }
