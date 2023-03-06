@@ -21,13 +21,15 @@ public class DashboardManager extends SubsystemBase {
             DriveTrain driveTrain,
             Command arcadeSplitCommand,
             Command arcade1StickCommand,
-            Command tankDriveCommand) {
+            Command tankDriveCommand,
+            Command curvatureDriveCommand) {
         ShuffleboardTab driveTab = Shuffleboard.getTab(Constants.Dashboard.DriveTabName);
 
         this.currentDriveCommand = arcadeSplitCommand;
         this.driveModeChooser.setDefaultOption(Constants.Dashboard.DriveModeOptions.ArcadeSplit, arcadeSplitCommand);
         this.driveModeChooser.addOption(Constants.Dashboard.DriveModeOptions.Arcade1Stick, arcade1StickCommand);
         this.driveModeChooser.addOption(Constants.Dashboard.DriveModeOptions.Tank, tankDriveCommand);
+        this.driveModeChooser.addOption(Constants.Dashboard.DriveModeOptions.Curvature, curvatureDriveCommand);
         driveTab.add(Constants.Dashboard.DriveModeTitle, this.driveModeChooser)
                 .withPosition(0, 0)
                 .withSize(2, 1);

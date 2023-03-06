@@ -7,11 +7,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousCommand;
+import frc.robot.commands.CommandFactory;
 import frc.robot.commands.PlayStartupCommand;
-import frc.robot.commands.TankDrive;
-import frc.robot.commands.Twist;
+import frc.robot.commands.TwistCommand;
 import frc.robot.subsystems.DashboardManager;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SoundBoard;
@@ -41,6 +40,8 @@ public class RobotContainer {
   private final Rumbler rumbler = new Rumbler();
   private final DashboardManager dashboardManager = new DashboardManager();
 
+  private final CommandFactory commandFactory;
+
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -48,12 +49,14 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   private RobotContainer() {
+    this.commandFactory = new CommandFactory(this);
+
     // Configure the button bindings
     configureButtonBindings();
 
+    final var arcadeDriveCommand = this.commandFactory.getArcadeDriveCommand();
     // Configure default commands
-    m_driveTrain.setDefaultCommand(new ArcadeDrive(() -> -getXboxController1().getRawAxis(1),
-        () -> -getXboxController1().getRawAxis(4), "Split", "B260:100 P260 B260:100", m_driveTrain));
+    m_driveTrain.setDefaultCommand(arcadeDriveCommand);
 
     // Configure autonomous sendable chooser
     // this should be set up in the dashboard manager
@@ -63,9 +66,10 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", m_chooser);
     this.dashboardManager.configureDashboard(
         m_driveTrain,
-        getArcadeSplitCommand(),
-        getArcade1StickCommand(),
-        getTankDriveCommand());
+        arcadeDriveCommand,
+        this.commandFactory.getStickDriveCommand(),
+        this.commandFactory.getTankDriveCommand(),
+        this.commandFactory.getCurvatureDriveCommand());
   }
 
   public static RobotContainer getInstance() {
@@ -83,7 +87,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Create some buttons
     final JoystickButton twistButton = new JoystickButton(xboxController1, 8);
-    twistButton.onTrue(new Twist(m_driveTrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+    twistButton.onTrue(new TwistCommand(m_driveTrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
   }
 
   public void rumble(String rumblePattern) {
@@ -130,31 +134,12 @@ public class RobotContainer {
         : this.dashboardManager.getSpeedGovernor();
   }
 
-  private Command getArcadeSplitCommand() {
-    return new ArcadeDrive(
-        () -> -this.getXboxController1().getRawAxis(1),
-        () -> -this.getXboxController1().getRawAxis(4),
-        "Split",
-        Constants.RumblePatterns.ArcadeSplit,
-        m_driveTrain)
-        .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
+  public double getMaxSpeed() {
+    return Constants.DriveTrain.MaxSpeed * this.getSpeedGovernor();
   }
 
-  private Command getArcade1StickCommand() {
-    return new ArcadeDrive(
-        () -> -getXboxController1().getRawAxis(1),
-        () -> -getXboxController1().getRawAxis(0),
-        "1-Stick",
-        Constants.RumblePatterns.Arcade1Stick,
-        m_driveTrain)
-        .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
+  public double getMaxAngularSpeed() {
+    return Constants.DriveTrain.MaxAngularSpeed;
   }
 
-  private Command getTankDriveCommand() {
-    return new TankDrive(
-        () -> -getXboxController1().getRawAxis(1),
-        () -> -getXboxController1().getRawAxis(5),
-        m_driveTrain)
-        .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
-  }
 }

@@ -24,11 +24,13 @@ public final class Constants {
         public static final int EncoderCPR = 1024;
         public static final double EncoderDistancePerPulse = (WheelDiameterMeters * Math.PI) / (double) EncoderCPR;
 
-        public static final double DefaultSpeedGovernor = 0.5;
+        public static final double DefaultSpeedGovernor = 0.65;
+        public static final double MaxSpeed = 3.0; // m/s
+        public static final double MaxAngularSpeed = 2 * Math.PI; // rad/s
 
-        public static final double TrackWidhMeters = 0.69;
+        public static final double TrackWitdhMeters = 0.69;
         public static final DifferentialDriveKinematics DriveKinematics = new DifferentialDriveKinematics(
-                TrackWidhMeters);
+                TrackWitdhMeters);
 
         // THESE VALUES ARE BOGUS AND ONLY HERE FOR SIMULATION. SHOULD NOT BE USED ON
         // LIVE ROBOT
@@ -39,6 +41,10 @@ public final class Constants {
         public static final double PDriveVelocity = 8.5;
 
         public static final double GyroSensitivity = 0.007;
+
+        // units per second
+        public static final double SpeedRateLimit = 3.0;
+        public static final double RotationRateLimit = 3.0;
     }
 
     public static final class Vision {
@@ -94,6 +100,7 @@ public final class Constants {
             public static final String ArcadeSplit = "Arcade Split";
             public static final String Arcade1Stick = "Arcade 1-Stick";
             public static final String Tank = "Tank Drive";
+            public static final String Curvature = "Curvature Drive";
         }
 
         public static final String SpeedGovernorTitle = "Speed Governor";
