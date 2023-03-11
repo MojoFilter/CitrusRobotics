@@ -28,19 +28,23 @@ public final class CommandFactory {
         return new TankDriveCommand(
                 () -> -bot.getXboxController1().getRawAxis(1) * bot.getSpeedGovernor(),
                 () -> -bot.getXboxController1().getRawAxis(5) * bot.getSpeedGovernor(),
-                bot.m_driveTrain)
+                bot.getDriveTrain())
                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
     }
 
     public Command getCurvatureDriveCommand() {
-        return Commands.run(() -> this.bot.m_driveTrain.curvatureDrive(
+        return Commands.run(() -> this.bot.getDriveTrain().curvatureDrive(
             -bot.getXboxController1().getRawAxis(1) * bot.getSpeedGovernor(),
             -bot.getXboxController1().getRawAxis(4) * bot.getSpeedGovernor()))
                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
     }
 
     public Command getTwistCommand() {
-        return new TwistCommand(this.bot.m_driveTrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf);
+        return new TwistCommand(this.bot.getDriveTrain()).withInterruptBehavior(InterruptionBehavior.kCancelSelf);
+    }
+
+    public Command getChaseTargetCommand() {
+        return new ChaseTargetCommand(this.bot.getDriveTrain());
     }
 
     private Command getArcadeDriveCommand(int rotationAxis, String arcadeMode,
@@ -50,7 +54,7 @@ public final class CommandFactory {
                 * bot.getSpeedGovernor();
         return new ArcadeDriveCommand(speedInput, rotationInput, arcadeMode,
                 rumblePattern,
-                bot.m_driveTrain)
+                bot.getDriveTrain())
                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
     }
 }

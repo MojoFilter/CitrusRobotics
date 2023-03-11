@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -45,6 +46,12 @@ public final class Constants {
         // units per second
         public static final double SpeedRateLimit = 3.0;
         public static final double RotationRateLimit = 3.0;
+
+        // PID gain values
+        public static final double LinearP = 0.1;
+        public static final double LinearD = 0.0;
+        public static final double AngularP = 0.1;
+        public static final double AngularD = 0.0;
     }
 
     public static final class Vision {
@@ -54,7 +61,7 @@ public final class Constants {
         public static final double TargetCameraOffsetMetersZ = 1;
         public static final double TargetCameraRoll = 0;
         public static final double TargetCameraPitch = 0;
-        public static final double TargetCameraYaw = Math.PI / 2.0;
+        public static final double TargetCameraYaw = 0;
         public static final double TargetCameraFOVDegrees = 75.0;
         public static final double TargetCameraMaxLedRangeMeters = 20; // Not really relevant
 
@@ -71,6 +78,9 @@ public final class Constants {
 
         public static final Transform3d RobotToTargetCamera = new Transform3d(TargetCameraPosition,
                 TargetCameraRotation);
+
+        public static final double ChaseTargetHeightMeters = Units.feetToMeters(4);
+        public static final double ChaseTargetRangeMeters = 1.5;
 
     }
 
