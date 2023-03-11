@@ -1,10 +1,13 @@
 package frc.robot.subsystems;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.SimVisionSystem;
 
+import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.cscore.MjpegServer;
@@ -14,7 +17,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -40,7 +45,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 
 /**
  *
@@ -173,8 +177,15 @@ public class DriveTrain extends SubsystemBase {
 
         try {
             this.fieldTags = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
+            /*
+            List<AprilTag> testTags = new ArrayList<AprilTag>();
+            testTags.add(new AprilTag(6, new Pose3d(8, 3, 1, new Rotation3d())));
+            var length = Units.feetToMeters(54) + Units.inchesToMeters(3.25);
+            var width = Units.feetToMeters(26) + Units.inchesToMeters(3.5);
+            this.fieldTags = new AprilTagFieldLayout(testTags, length, width);
+            */
             this.visionSim.addVisionTargets(this.fieldTags);
-        } catch (IOException ioe) {
+        } catch (Exception ioe) {//IOException ioe) {
             ioe.printStackTrace();
             throw new RuntimeException();
         }

@@ -31,8 +31,8 @@ public class RobotContainer {
   private static RobotContainer m_robotContainer = new RobotContainer();
 
   // The robot's subsystems
-  public final SoundBoard m_soundBoard = new SoundBoard();
-  public final DriveTrain m_driveTrain = new DriveTrain();
+  private final SoundBoard m_soundBoard = new SoundBoard();
+  private final DriveTrain m_driveTrain = new DriveTrain();
 
   // Joysticks
   private final XboxController xboxController1 = new XboxController(0);
@@ -87,7 +87,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Create some buttons
     final JoystickButton twistButton = new JoystickButton(xboxController1, 8);
-    twistButton.onTrue(new TwistCommand(m_driveTrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+    twistButton.onTrue(this.commandFactory.getTwistCommand());
+
+    final var chaseButton = new JoystickButton(xboxController1, 4);
+    chaseButton.whileTrue(this.commandFactory.getChaseTargetCommand());
   }
 
   public void rumble(String rumblePattern) {
@@ -140,6 +143,10 @@ public class RobotContainer {
 
   public double getMaxAngularSpeed() {
     return Constants.DriveTrain.MaxAngularSpeed;
+  }
+
+  public DriveTrain getDriveTrain() {
+    return m_driveTrain;
   }
 
 }
