@@ -52,6 +52,10 @@ public final class CommandFactory {
         return new ChaseTargetCommand(this.bot.getDriveTrain(), this.chaseForwardController, this.chaseAngularController);
     }
 
+    public Command getAutoBalanceCommand() {
+        return new AutoBalanceCommand(this.bot.getDriveTrain());
+    }
+
     private Command getArcadeDriveCommand(int rotationAxis, String arcadeMode,
             String rumblePattern) {
         DoubleSupplier speedInput = () -> -bot.getXboxController1().getRawAxis(1) * bot.getSpeedGovernor();
