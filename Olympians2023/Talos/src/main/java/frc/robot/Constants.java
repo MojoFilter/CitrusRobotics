@@ -121,4 +121,31 @@ public final class Constants {
         public static final String[] DriveCameraUrls= {"http://10.93.0.2:1181/stream.mjpg"};
         public static final String[] TargetCameraUrls = {"http://photonvision:1184/stream.mjpg"};
     }
+
+    public static final class Balance {
+        public static final double RAD2DEG = 180 / Math.PI;
+        public static final double TicksPerSecond = 50;
+
+        // Angle in degrees at which Talos recognizes that it's moving onto the charge station
+        public static double OnChargeStationDegrees = 13.0;
+
+        // Angle in degrees at which Talos can assum it's level on the charging station.
+        public static double LevelDegrees = 5.0;
+
+        // The buffer time on sensor readings to filter out noise
+        public static double DebounceTime = 0.2;
+
+        public static double TalosSpeedFast = 0.4;
+        public static double TalosSpeedSlow = 0.2;
+
+        // Time in seconds to drive back toward the scoring zone from the start position
+        public static double FirstTapTime = 0.4;
+
+        // Time in seconds to back up after knocking over the cone before securing it with
+        // a second tap
+        public static double ScoringBackUpTime = 0.2;
+
+        // Amount of time to drive forward, securing the knocked-off cone in the score zone
+        public static double SecondTapTime = 0.3;
+    }
 }
