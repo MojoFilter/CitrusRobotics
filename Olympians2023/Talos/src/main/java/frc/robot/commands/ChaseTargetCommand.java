@@ -18,22 +18,24 @@ public class ChaseTargetCommand extends CommandBase {
     private final DriveTrain driveTrain;
     private final PhotonCamera tagetCam;
     private final DoubleEntry targetRangeEntry;
-    private PIDController forwardController;
-    private PIDController turnController;
+    private final PIDController forwardController;
+    private final PIDController turnController;
 
-    public ChaseTargetCommand(DriveTrain driveTrain) {
+    public ChaseTargetCommand(DriveTrain driveTrain, PIDController forwardController, PIDController angularController) {
         this.driveTrain = driveTrain;
         this.tagetCam = new PhotonCamera(Vision.TargetCameraName);
         this.addRequirements(driveTrain);
 
-        var topic = NetworkTableInstance.getDefault().getDoubleTopic("Drive/TargetRange");
+        var nt = NetworkTableInstance.getDefault();
+        var topic = nt.getDoubleTopic("Drive/TargetRange");
         this.targetRangeEntry = topic.getEntry(-1.0);
+
+        this.forwardController = forwardController;
+        this.turnController = angularController;
     }
 
     @Override
     public void initialize() {
-        this.forwardController = new PIDController(Constants.DriveTrain.LinearP, 0, Constants.DriveTrain.LinearD);
-        this.turnController = new PIDController(Constants.DriveTrain.AngularP, 0, Constants.DriveTrain.AngularD);
     }
 
     @Override
@@ -50,7 +52,7 @@ public class ChaseTargetCommand extends CommandBase {
                     Vision.ChaseTargetHeightMeters,
                     Vision.TargetCameraPitch,
                     Units.degreesToRadians(target.getPitch()));
-            forwardSpeed = -this.forwardController.calculate(Math.abs(range), Vision.ChaseTargetRangeMeters);
+            forwardSpeed = -this.forwardController.calculate(Math.abs(range), -Vision.ChaseTargetRangeMeters);
             rotationSpeed = -this.turnController.calculate(target.getYaw(), 0.0);
         }
         this.driveTrain.arcadeDrive(forwardSpeed, rotationSpeed);

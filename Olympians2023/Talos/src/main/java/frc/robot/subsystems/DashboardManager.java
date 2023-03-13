@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -16,9 +17,13 @@ public class DashboardManager extends SubsystemBase {
     private GenericEntry speedGovernorSource;
     private SendableChooser<Command> driveModeChooser = new SendableChooser<>();
     private Command currentDriveCommand;
+    private PIDController chaseForwardController;
+    private PIDController chaseTurnController;
 
     public void configureDashboard(
             DriveTrain driveTrain,
+            PIDController chaseForwardController,
+            PIDController chaseTurnController,
             Command arcadeSplitCommand,
             Command arcade1StickCommand,
             Command tankDriveCommand,
@@ -51,18 +56,20 @@ public class DashboardManager extends SubsystemBase {
 
         driveTab.add(driveTrain.getDrive())
                 .withPosition(6, 2);
-
                 
-        driveTab.addCamera(
+/*         driveTab.addCamera(
             Constants.Dashboard.TargetCameraTitle,
             Constants.Dashboard.TargetCameraName,
-            Constants.Dashboard.TargetCameraUrls);
+            Constants.Dashboard.TargetCameraUrls); */
             
         driveTab.addCamera(
             Constants.Dashboard.DriveCameraTitle,
             Constants.Dashboard.DriveCameraName,
             Constants.Dashboard.DriveCameraUrls).withPosition(8, 0); 
         //Shuffleboard.selectTab(Constants.Dashboard.DriveTabName);
+
+        driveTab.add("Chase Forward", chaseForwardController).withPosition(8, 2);
+        driveTab.add("Chase Turn", chaseTurnController).withPosition(8, 3);
     }
 
     public double getSpeedGovernor() {

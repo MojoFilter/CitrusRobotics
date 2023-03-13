@@ -14,11 +14,24 @@
       "ypos": "29"
     }
   },
+  "Table": {
+    "0x965B9C9E,2": {
+      "Column 0  Width": "130",
+      "Column 1  Weight": "1.0000",
+      "RefScale": "13"
+    },
+    "0xE56EC1C2,4": {
+      "Column 0  Weight": "1.0000",
+      "Column 1  Weight": "1.0000",
+      "Column 2  Weight": "1.0000",
+      "Column 3  Weight": "1.0000"
+    }
+  },
   "Window": {
     "###/Shuffleboard/Drive/Field": {
       "Collapsed": "0",
-      "Pos": "337,65",
-      "Size": "400,200"
+      "Pos": "275,61",
+      "Size": "479,261"
     },
     "###FMS": {
       "Collapsed": "0",
@@ -38,7 +51,7 @@
     "###NetworkTables Info": {
       "Collapsed": "0",
       "Pos": "784,96",
-      "Size": "750,215"
+      "Size": "499,215"
     },
     "###Other Devices": {
       "Collapsed": "0",

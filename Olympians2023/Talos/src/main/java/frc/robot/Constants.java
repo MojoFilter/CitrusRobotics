@@ -48,9 +48,9 @@ public final class Constants {
         public static final double RotationRateLimit = 3.0;
 
         // PID gain values
-        public static final double LinearP = 0.1;
-        public static final double LinearD = 0.0;
-        public static final double AngularP = 0.1;
+        public static final double LinearP = 0.8;
+        public static final double LinearD = 1.0;
+        public static final double AngularP = 0.4;
         public static final double AngularD = 0.0;
     }
 

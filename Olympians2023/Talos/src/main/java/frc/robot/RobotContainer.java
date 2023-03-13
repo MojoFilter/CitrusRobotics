@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -45,11 +46,14 @@ public class RobotContainer {
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+  private final PIDController chaseForwardPid = new PIDController(Constants.DriveTrain.LinearP, 0, Constants.DriveTrain.LinearD);
+  private final PIDController chaseAngularPid = new PIDController(Constants.DriveTrain.AngularP, 0, Constants.DriveTrain.AngularD);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   private RobotContainer() {
-    this.commandFactory = new CommandFactory(this);
+    this.commandFactory = new CommandFactory(this, this.chaseForwardPid, this.chaseAngularPid);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -66,6 +70,8 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", m_chooser);
     this.dashboardManager.configureDashboard(
         m_driveTrain,
+        this.chaseForwardPid,
+        this.chaseAngularPid,
         arcadeDriveCommand,
         this.commandFactory.getStickDriveCommand(),
         this.commandFactory.getTankDriveCommand(),

@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
@@ -11,9 +12,13 @@ import frc.robot.RobotContainer;
 public final class CommandFactory {
 
     private final RobotContainer bot;
+    private final PIDController chaseForwardController;
+    private final PIDController chaseAngularController;
 
-    public CommandFactory(RobotContainer bot) {
+    public CommandFactory(RobotContainer bot, PIDController chaseForwardPid, PIDController chaseAngularPid) {
         this.bot = bot;
+        this.chaseAngularController = chaseAngularPid;
+        this.chaseForwardController = chaseForwardPid;
     }
 
     public Command getArcadeDriveCommand() {
@@ -44,7 +49,7 @@ public final class CommandFactory {
     }
 
     public Command getChaseTargetCommand() {
-        return new ChaseTargetCommand(this.bot.getDriveTrain());
+        return new ChaseTargetCommand(this.bot.getDriveTrain(), this.chaseForwardController, this.chaseAngularController);
     }
 
     private Command getArcadeDriveCommand(int rotationAxis, String arcadeMode,
