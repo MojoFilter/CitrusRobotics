@@ -62,7 +62,7 @@ public class DriveTrain extends SubsystemBase {
     private Encoder rightEncoder;
 
     private final ADXRS450_Gyro gyro;
-    private final Accelerometer accelerometer;
+    private final BuiltInAccelerometer accelerometer;
     private final PhotonCamera targetCam;
 
     private DifferentialDriveOdometry odometry;
@@ -101,6 +101,7 @@ public class DriveTrain extends SubsystemBase {
         left2.setInverted(false);
 
         leftController = new MotorControllerGroup(left1, left2);
+        this.leftController.setInverted(true);
         addChild("Left Controller", leftController);
 
         right1 = new PWMVictorSPX(2);
@@ -300,7 +301,7 @@ public class DriveTrain extends SubsystemBase {
         return this.gyro;
     }
 
-    public Accelerometer getAccelerometer() {
+    public BuiltInAccelerometer getAccelerometer() {
         return this.accelerometer;
     }
 

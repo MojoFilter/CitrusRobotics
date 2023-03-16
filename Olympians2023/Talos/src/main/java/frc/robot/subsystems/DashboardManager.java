@@ -4,6 +4,7 @@ import java.util.Map;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -56,6 +57,9 @@ public class DashboardManager extends SubsystemBase {
 
         driveTab.add(driveTrain.getDrive())
                 .withPosition(6, 2);
+
+        driveTab.add(driveTrain.getAccelerometer())
+                .withPosition(6, 4);
                 
 /*         driveTab.addCamera(
             Constants.Dashboard.TargetCameraTitle,
