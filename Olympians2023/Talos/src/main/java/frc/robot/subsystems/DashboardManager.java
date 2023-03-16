@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Dashboard;
 
 public class DashboardManager extends SubsystemBase {
 
@@ -19,6 +20,7 @@ public class DashboardManager extends SubsystemBase {
 
     public void configureDashboard(
             DriveTrain driveTrain,
+            Arm arm,
             Command arcadeSplitCommand,
             Command arcade1StickCommand,
             Command tankDriveCommand,
@@ -63,6 +65,9 @@ public class DashboardManager extends SubsystemBase {
             Constants.Dashboard.DriveCameraName,
             Constants.Dashboard.DriveCameraUrls).withPosition(8, 0); 
         //Shuffleboard.selectTab(Constants.Dashboard.DriveTabName);
+
+        var testTab = Shuffleboard.getTab(Dashboard.TestTabName);
+        testTab.add("Arm", arm.getMechanism());
     }
 
     public double getSpeedGovernor() {

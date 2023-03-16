@@ -2,9 +2,11 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
+import frc.robot.Constants.ArmSettings;
 import frc.robot.Constants.RumblePatterns;
 import frc.robot.RobotContainer;
 
@@ -49,6 +51,17 @@ public final class CommandFactory {
 
     public Command getAutoBalanceCommand() {
         return new AutoBalanceCommand(this.bot.getDriveTrain());
+    }
+
+    public Command getArmTrackSetpointCommand() {
+        var arm = this.bot.getArm();    
+        var defaultPosition = ArmSettings.Shoulder.DefaultPositionDegrees;
+        Preferences.initDouble(ArmSettings.Shoulder.PositionKey, defaultPosition);
+        return Commands.runOnce(()-> {
+            var setPoint = Preferences.getDouble(ArmSettings.Shoulder.PositionKey, defaultPosition);
+            arm.setGoal(setPoint);
+            arm.enable();
+        }, arm);
     }
 
     private Command getArcadeDriveCommand(int rotationAxis, String arcadeMode,

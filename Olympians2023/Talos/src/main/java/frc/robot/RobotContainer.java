@@ -7,10 +7,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.CommandFactory;
 import frc.robot.commands.PlayStartupCommand;
 import frc.robot.commands.TwistCommand;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DashboardManager;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.SoundBoard;
@@ -33,6 +35,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final SoundBoard m_soundBoard = new SoundBoard();
   private final DriveTrain m_driveTrain = new DriveTrain();
+  private final Arm arm = new Arm();
 
   // Joysticks
   private final XboxController xboxController1 = new XboxController(0);
@@ -66,6 +69,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", m_chooser);
     this.dashboardManager.configureDashboard(
         m_driveTrain,
+        this.arm,
         arcadeDriveCommand,
         this.commandFactory.getStickDriveCommand(),
         this.commandFactory.getTankDriveCommand(),
@@ -91,6 +95,9 @@ public class RobotContainer {
 
     final var chaseButton = new JoystickButton(xboxController1, 4);
     chaseButton.whileTrue(this.commandFactory.getChaseTargetCommand());
+
+    final var trackArmButton = new Trigger(()->this.getXboxController1().getLeftTriggerAxis() > 0.5);
+    trackArmButton.onTrue(this.commandFactory.getArmTrackSetpointCommand());
   }
 
   public void rumble(String rumblePattern) {
@@ -147,6 +154,10 @@ public class RobotContainer {
 
   public DriveTrain getDriveTrain() {
     return m_driveTrain;
+  }
+
+  public Arm getArm() {
+    return this.arm;
   }
 
 }
