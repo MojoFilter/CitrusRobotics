@@ -1,19 +1,20 @@
 package frc.robot;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.CommandFactory;
 import frc.robot.commands.PlayStartupCommand;
-import frc.robot.commands.TwistCommand;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DashboardManager;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elbow;
+import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.SoundBoard;
 import frc.robot.util.Rumbler;
 
@@ -34,9 +35,14 @@ public class RobotContainer {
   // The robot's subsystems
   private final SoundBoard m_soundBoard = new SoundBoard();
   private final DriveTrain m_driveTrain = new DriveTrain();
+  // private final Arm arm = new Arm();
+  private final Shoulder shoulder = new Shoulder();
+  private final Elbow elbow = new Elbow();
+  private final Claw claw = new Claw();
 
   // Joysticks
   private final XboxController xboxController1 = new XboxController(0);
+  private final Joystick joystick = new Joystick(1);
 
   private final Rumbler rumbler = new Rumbler();
   private final DashboardManager dashboardManager = new DashboardManager();
@@ -46,14 +52,11 @@ public class RobotContainer {
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  private final PIDController chaseForwardPid = new PIDController(Constants.DriveTrain.LinearP, 0, Constants.DriveTrain.LinearD);
-  private final PIDController chaseAngularPid = new PIDController(Constants.DriveTrain.AngularP, 0, Constants.DriveTrain.AngularD);
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   private RobotContainer() {
-    this.commandFactory = new CommandFactory(this, this.chaseForwardPid, this.chaseAngularPid);
+    this.commandFactory = new CommandFactory(this);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -61,6 +64,19 @@ public class RobotContainer {
     final var arcadeDriveCommand = this.commandFactory.getArcadeDriveCommand();
     // Configure default commands
     m_driveTrain.setDefaultCommand(arcadeDriveCommand);
+
+    this.shoulder.setDefaultCommand(this.commandFactory.getDriveShoulderCommand(() -> -this.joystick.getY()));
+    this.elbow.setDefaultCommand(this.commandFactory.getDriveElbowCommand(this.joystick::getTwist));
+    this.claw.setDefaultCommand(this.commandFactory.getDriveClawCommand(
+        () -> {
+          var pov = this.joystick.getPOV();
+          if (pov == 0.0) {
+            return 1.0;
+          } else if (pov == 180.0) {
+            return -1.0;
+          }
+          return 0.0;
+        }));
 
     // Configure autonomous sendable chooser
     // this should be set up in the dashboard manager
@@ -70,8 +86,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", m_chooser);
     this.dashboardManager.configureDashboard(
         m_driveTrain,
-        this.chaseForwardPid,
-        this.chaseAngularPid,
+        this.shoulder,
         arcadeDriveCommand,
         this.commandFactory.getStickDriveCommand(),
         this.commandFactory.getTankDriveCommand(),
@@ -95,8 +110,11 @@ public class RobotContainer {
     final JoystickButton twistButton = new JoystickButton(xboxController1, 8);
     twistButton.onTrue(this.commandFactory.getTwistCommand());
 
-    final var chaseButton = new JoystickButton(xboxController1, 4);
-    chaseButton.whileTrue(this.commandFactory.getChaseTargetCommand());
+    /*
+     * final var trackArmButton = new
+     * Trigger(()->this.getXboxController1().getLeftTriggerAxis() > 0.5);
+     * trackArmButton.onTrue(this.commandFactory.getArmTrackSetpointCommand());
+     */
   }
 
   public void rumble(String rumblePattern) {
@@ -153,6 +171,18 @@ public class RobotContainer {
 
   public DriveTrain getDriveTrain() {
     return m_driveTrain;
+  }
+
+  public Shoulder getShoulder() {
+    return this.shoulder;
+  }
+
+  public Elbow getElbow() {
+    return this.elbow;
+  }
+
+  public Claw getClaw() {
+    return this.claw;
   }
 
 }

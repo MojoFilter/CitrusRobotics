@@ -20,11 +20,27 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    
+    public static final class CanIds {
+        public static final int RightRearMotor = 2;
+        public static final int RightFrontMotor = 5;
+        public static final int LeftRearMotor = 3;
+        public static final int LeftFrontMotor = 4;
+        public static final int ShoulderMotor = 6;
+        public static final int ElbowMotor = 7;
+        public static final int ClawMotor = 8;
+    }
+
     public static final class DriveTrain {
         public static final double WheelDiameterMeters = 0.15;
         public static final int EncoderCPR = 1024;
         public static final double EncoderDistancePerPulse = (WheelDiameterMeters * Math.PI) / (double) EncoderCPR;
 
+        public static final int LeftEncoderChannelA = 2;
+        public static final int LeftEncoderChannelB = 3;
+        public static final int RightEncoderChannelA = 0;
+        public static final int RightEncoderChannelB = 1;
+        
         public static final double DefaultSpeedGovernor = 0.65;
         public static final double MaxSpeed = 3.0; // m/s
         public static final double MaxAngularSpeed = 2 * Math.PI; // rad/s
@@ -84,6 +100,40 @@ public final class Constants {
 
     }
 
+    public static final class ArmSettings {
+        public static final double UpperArmLengthMeters = Units.inchesToMeters(30);
+        public static final double UpperArmMassKgs = 8.0;
+
+        public static final class Shoulder {
+            public static final int MotorPort = 5;
+            public static final int EncoderAChannel = 6;
+            public static final int EncoderBChannel = 7;
+
+            public static final double EncoderDistancePerPulse = 2.0 * Math.PI / 4096;
+            public static final double GearReduction = 200;
+            public static final double MinAngleRads = Units.degreesToRadians(-75);
+            public static final double MaxAngleRads = Units.degreesToRadians(255);
+
+            public static final String PositionKey = "ShoulderPosition";
+            public static final double DefaultPositionDegrees = 75;
+
+            public static final String PKey = "ShoulderP";
+            public static final double DefaultP = 50.0;
+
+            public static final double DefaultI = 0.0;
+            public static final double DefaultD = 0.0;
+
+            public static final double MaxVelocityRadsPerSecond = 3.0;
+            public static final double MaxAccelerationMetersPerSecondSquared = 10.0;
+
+            // THESE NEED REAL VALUES FROM SYSTEM IDENTIFICATION
+            public static final double SVolts = 1;
+            public static final double GVolts = 1;
+            public static final double VVoltSecondPerRad = 0.5;
+            public static final double AVoltSecondSquaredPerRad = 0.1;
+        }
+    }
+
     public static final class SoundBoard {
         public static String StartupFileName = "ready_to_roll.ogg";
     }
@@ -104,7 +154,8 @@ public final class Constants {
 
     public static final class Dashboard {
         public static String DriveTabName = "Drive";
-        public static final String DriveModeTitle = "Drive Mode";
+        public static String TestTabName = "Testing";
+        public static final String DriveModeTitle = "Drive Mode";        
 
         public static final class DriveModeOptions {
             public static final String ArcadeSplit = "Arcade Split";

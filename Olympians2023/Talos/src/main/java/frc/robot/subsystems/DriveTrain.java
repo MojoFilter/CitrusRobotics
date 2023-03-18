@@ -1,13 +1,12 @@
 package frc.robot.subsystems;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.photonvision.PhotonCamera;
 import org.photonvision.SimVisionSystem;
 
-import edu.wpi.first.apriltag.AprilTag;
+import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.cscore.MjpegServer;
@@ -17,9 +16,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -31,8 +28,8 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
@@ -45,22 +42,24 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.CanIds;
 
 /**
  *
  */
 public class DriveTrain extends SubsystemBase {
 
-    private PWMVictorSPX left1;
-    private PWMVictorSPX left2;
+    private CANSparkMax left1;
+    private CANSparkMax left2;
     private MotorControllerGroup leftController;
-    private PWMVictorSPX right1;
-    private PWMVictorSPX right2;
+    private CANSparkMax right1;
+    private CANSparkMax right2;
     private MotorControllerGroup rightController;
     private DifferentialDrive drive;
     private Encoder leftEncoder;
     private Encoder rightEncoder;
 
+    private final AHRS navx;
     private final ADXRS450_Gyro gyro;
     private final BuiltInAccelerometer accelerometer;
     private final PhotonCamera targetCam;
@@ -92,24 +91,24 @@ public class DriveTrain extends SubsystemBase {
     *
     */
     public DriveTrain() {
-        left1 = new PWMVictorSPX(0);
-        addChild("Left 1", left1);
+        left1 = new CANSparkMax(CanIds.LeftFrontMotor, MotorType.kBrushed);
+        //addChild("Left 1", left1);
         left1.setInverted(false);
 
-        left2 = new PWMVictorSPX(1);
-        addChild("Left 2", left2);
+        left2 = new CANSparkMax(CanIds.LeftRearMotor, MotorType.kBrushed);
+        //addChild("Left 2", left2);
         left2.setInverted(false);
 
         leftController = new MotorControllerGroup(left1, left2);
         this.leftController.setInverted(true);
         addChild("Left Controller", leftController);
 
-        right1 = new PWMVictorSPX(2);
-        addChild("Right 1", right1);
+        right1 = new CANSparkMax(CanIds.RightFrontMotor, MotorType.kBrushed);       
+        // addChild("Right 1", right1);
         right1.setInverted(false);
 
-        right2 = new PWMVictorSPX(3);
-        addChild("Right 2", right2);
+        right2 = new CANSparkMax(CanIds.RightRearMotor, MotorType.kBrushed);
+        //addChild("Right 2", right2);
         right2.setInverted(false);
 
         rightController = new MotorControllerGroup(right1, right2);
@@ -121,16 +120,27 @@ public class DriveTrain extends SubsystemBase {
         drive.setExpiration(0.1);
         drive.setMaxOutput(1.0);
 
-        leftEncoder = new Encoder(0, 1, false, EncodingType.k4X);
+        leftEncoder = new Encoder(
+            Constants.DriveTrain.LeftEncoderChannelA, 
+            Constants.DriveTrain.LeftEncoderChannelB, 
+            false, 
+            EncodingType.k4X);
         addChild("Left Encoder", leftEncoder);
         leftEncoder.setDistancePerPulse(1.0);
 
-        rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
+        rightEncoder = new Encoder(
+            Constants.DriveTrain.RightEncoderChannelA, 
+            Constants.DriveTrain.RightEncoderChannelB,
+            true,
+            EncodingType.k4X);
         addChild("Right Encoder", rightEncoder);
         rightEncoder.setDistancePerPulse(1.0);
 
         this.gyro = new ADXRS450_Gyro();
         this.addChild("Gyro", this.gyro);
+
+        this.navx = new AHRS(SPI.Port.kMXP);
+        this.addChild("Navx", this.navx);
 
         this.accelerometer = new BuiltInAccelerometer();
 
@@ -313,6 +323,18 @@ public class DriveTrain extends SubsystemBase {
         return this.driveCamera;
     }
 
+    public AHRS getNav() {
+        return this.navx;
+    }
+
+    public Encoder getLeftEncoder() {
+        return this.leftEncoder;
+    }
+
+    public Encoder getRightEncoder() {
+        return this.rightEncoder;
+    }
+ 
     private void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
         final double leftFeedforward = this.feedforward.calculate(speeds.leftMetersPerSecond);
         final double rightFeedforward = this.feedforward.calculate(speeds.rightMetersPerSecond);

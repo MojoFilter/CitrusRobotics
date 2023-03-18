@@ -2,23 +2,18 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants.RumblePatterns;
 import frc.robot.RobotContainer;
 
 public final class CommandFactory {
 
     private final RobotContainer bot;
-    private final PIDController chaseForwardController;
-    private final PIDController chaseAngularController;
 
-    public CommandFactory(RobotContainer bot, PIDController chaseForwardPid, PIDController chaseAngularPid) {
+    public CommandFactory(RobotContainer bot) {
         this.bot = bot;
-        this.chaseAngularController = chaseAngularPid;
-        this.chaseForwardController = chaseForwardPid;
     }
 
     public Command getArcadeDriveCommand() {
@@ -47,14 +42,39 @@ public final class CommandFactory {
     public Command getTwistCommand() {
         return new TwistCommand(this.bot.getDriveTrain()).withInterruptBehavior(InterruptionBehavior.kCancelSelf);
     }
-
+/* 
     public Command getChaseTargetCommand() {
         return new ChaseTargetCommand(this.bot.getDriveTrain(), this.chaseForwardController, this.chaseAngularController);
     }
-
+    */
+    
     public Command getAutoBalanceCommand() {
         return new AutoBalanceCommand(this.bot.getDriveTrain());
     }
+/*
+    public Command getArmTrackSetpointCommand() {
+        var arm = this.bot.getArm();    
+        var defaultPosition = ArmSettings.Shoulder.DefaultPositionDegrees;
+        Preferences.initDouble(ArmSettings.Shoulder.PositionKey, defaultPosition);
+        return Commands.runOnce(()-> {
+            var setPoint = Preferences.getDouble(ArmSettings.Shoulder.PositionKey, defaultPosition);
+            arm.setGoal(setPoint);
+            arm.enable();
+        }, arm);
+    }
+*/
+    public Command getDriveShoulderCommand(DoubleSupplier speedSupplier) {
+        return Commands.run(() -> this.bot.getShoulder().driveShoulder(speedSupplier.getAsDouble()), bot.getShoulder());
+    }
+
+    public Command getDriveElbowCommand(DoubleSupplier speedSupplier){
+        return Commands.run(() -> this.bot.getElbow().drive(speedSupplier.getAsDouble()), bot.getElbow());
+    }
+
+    public Command getDriveClawCommand(DoubleSupplier speedSuppler) {
+        return Commands.run(() -> this.bot.getClaw().drive(speedSuppler.getAsDouble()), this.bot.getClaw());
+    }
+    
 
     private Command getArcadeDriveCommand(int rotationAxis, String arcadeMode,
             String rumblePattern) {

@@ -8,6 +8,7 @@
       "/Shuffleboard/Drive/Drive Mode": "String Chooser",
       "/Shuffleboard/Drive/Field": "Field2d",
       "/Shuffleboard/Drive/Gyro": "Gyro",
+      "/Shuffleboard/Testing/Navx": "Gyro",
       "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/DriveTrain": "Subsystem",
       "/SmartDashboard/Play Startup Command": "Command",
