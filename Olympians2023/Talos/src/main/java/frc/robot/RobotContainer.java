@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.CommandFactory;
 import frc.robot.commands.PlayStartupCommand;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DashboardManager;
 import frc.robot.subsystems.DriveTrain;
@@ -35,10 +36,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final SoundBoard m_soundBoard = new SoundBoard();
   private final DriveTrain m_driveTrain = new DriveTrain();
-  // private final Arm arm = new Arm();
-  private final Shoulder shoulder = new Shoulder();
-  private final Elbow elbow = new Elbow();
-  private final Claw claw = new Claw();
+  private final Arm arm = new Arm();
 
   // Joysticks
   private final XboxController xboxController1 = new XboxController(0);
@@ -65,6 +63,7 @@ public class RobotContainer {
     // Configure default commands
     m_driveTrain.setDefaultCommand(arcadeDriveCommand);
 
+    /* 
     this.shoulder.setDefaultCommand(this.commandFactory.getDriveShoulderCommand(() -> -this.joystick.getY()));
     this.elbow.setDefaultCommand(this.commandFactory.getDriveElbowCommand(this.joystick::getTwist));
     this.claw.setDefaultCommand(this.commandFactory.getDriveClawCommand(
@@ -77,6 +76,7 @@ public class RobotContainer {
           }
           return 0.0;
         }));
+        */
 
     // Configure autonomous sendable chooser
     // this should be set up in the dashboard manager
@@ -86,7 +86,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", m_chooser);
     this.dashboardManager.configureDashboard(
         m_driveTrain,
-        this.shoulder,
+        this.arm,
         arcadeDriveCommand,
         this.commandFactory.getStickDriveCommand(),
         this.commandFactory.getTankDriveCommand(),
@@ -171,18 +171,6 @@ public class RobotContainer {
 
   public DriveTrain getDriveTrain() {
     return m_driveTrain;
-  }
-
-  public Shoulder getShoulder() {
-    return this.shoulder;
-  }
-
-  public Elbow getElbow() {
-    return this.elbow;
-  }
-
-  public Claw getClaw() {
-    return this.claw;
   }
 
 }

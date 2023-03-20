@@ -31,15 +31,23 @@ public final class Constants {
         public static final int ClawMotor = 8;
     }
 
+    // It appears that DIO and PWM use a shared bus and cannot have operlapping
+    // assignments. (This should be verified because it seems weird)
+    public static final class InputChannels {
+        public static final int DriveRightEncoderChannelA = 0;
+        public static final int DriveRightEncoderChannelB = 1;
+        public static final int DriveLeftEncoderChannelA = 2;
+        public static final int DriveLeftEncoderChannelB = 3;
+
+        public static final int ShoulderEncoder = 4;
+        public static final int ElbowEncoder = 5;
+        public static final int ClawEncoder = 6;
+    }
+
     public static final class DriveTrain {
         public static final double WheelDiameterMeters = 0.15;
         public static final int EncoderCPR = 1024;
         public static final double EncoderDistancePerPulse = (WheelDiameterMeters * Math.PI) / (double) EncoderCPR;
-
-        public static final int LeftEncoderChannelA = 2;
-        public static final int LeftEncoderChannelB = 3;
-        public static final int RightEncoderChannelA = 0;
-        public static final int RightEncoderChannelB = 1;
         
         public static final double DefaultSpeedGovernor = 0.65;
         public static final double MaxSpeed = 3.0; // m/s
@@ -104,10 +112,7 @@ public final class Constants {
         public static final double UpperArmLengthMeters = Units.inchesToMeters(30);
         public static final double UpperArmMassKgs = 8.0;
 
-        public static final class Shoulder {
-            public static final int MotorPort = 5;
-            public static final int EncoderAChannel = 6;
-            public static final int EncoderBChannel = 7;
+        public static final class ShoulderSettings {
 
             public static final double EncoderDistancePerPulse = 2.0 * Math.PI / 4096;
             public static final double GearReduction = 200;
@@ -123,14 +128,24 @@ public final class Constants {
             public static final double DefaultI = 0.0;
             public static final double DefaultD = 0.0;
 
-            public static final double MaxVelocityRadsPerSecond = 3.0;
-            public static final double MaxAccelerationMetersPerSecondSquared = 10.0;
+            public static final double MaxVelocityRadsPerSecond = Math.PI / 4.0;
+            public static final double MaxAccelerationRadsPerSecondSquared = 1.0;
 
             // THESE NEED REAL VALUES FROM SYSTEM IDENTIFICATION
             public static final double SVolts = 1;
             public static final double GVolts = 1;
             public static final double VVoltSecondPerRad = 0.5;
             public static final double AVoltSecondSquaredPerRad = 0.1;
+        }
+
+        public static final class ElbowSettings {
+            public static final double MaxVelocityRadsPerSecond = Math.PI / 4.0;
+            public static final double MaxAccelerationRadsPerSecondSquared = 1.0;
+        }
+
+        public static final class ClawSettings {
+            public static final double MaxVelocityRadsPerSecond = Math.PI / 4.0;
+            public static final double MaxAccelerationRadsPerSecondSquared = 1.0;
         }
     }
 

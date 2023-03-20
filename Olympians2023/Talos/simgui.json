@@ -1,17 +1,60 @@
 {
+  "HALProvider": {
+    "Other Devices": {
+      "BuiltInAccel": {
+        "header": {
+          "open": true
+        }
+      },
+      "DutyCycleEncoder[5]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Arm": "Subsystem",
+      "/LiveWindow/Arm/Claw": "Subsystem",
+      "/LiveWindow/Arm/Elbow": "Subsystem",
+      "/LiveWindow/Arm/Shoulder": "Subsystem",
+      "/LiveWindow/Claw/PID Controller": "PIDController",
+      "/LiveWindow/DriveTrain": "Subsystem",
+      "/LiveWindow/DriveTrain/Drive": "DifferentialDrive",
+      "/LiveWindow/DriveTrain/Gyro": "Gyro",
+      "/LiveWindow/DriveTrain/Navx": "Gyro",
+      "/LiveWindow/Elbow/PID Controller": "PIDController",
+      "/LiveWindow/Shoulder/PID Controller": "PIDController",
+      "/LiveWindow/Ungrouped/DigitalInput[4]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[5]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[6]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[7]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[8]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[9]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/Shuffleboard/Drive/Chase Forward": "PIDController",
       "/Shuffleboard/Drive/Chase Turn": "PIDController",
       "/Shuffleboard/Drive/Drive": "DifferentialDrive",
       "/Shuffleboard/Drive/Drive Mode": "String Chooser",
       "/Shuffleboard/Drive/Field": "Field2d",
       "/Shuffleboard/Drive/Gyro": "Gyro",
+      "/Shuffleboard/Testing/Arm": "Subsystem",
+      "/Shuffleboard/Testing/Claw": "Subsystem",
+      "/Shuffleboard/Testing/Elbow": "Subsystem",
       "/Shuffleboard/Testing/Navx": "Gyro",
+      "/Shuffleboard/Testing/Shoulder": "Subsystem",
       "/SmartDashboard/Auto Mode": "String Chooser",
       "/SmartDashboard/DriveTrain": "Subsystem",
       "/SmartDashboard/Play Startup Command": "Command",
+      "/SmartDashboard/Shoulder": "Subsystem",
       "/SmartDashboard/SoundBoard": "Subsystem",
       "/SmartDashboard/TargetCam Sim Field": "Field2d",
       "/SmartDashboard/Twist": "Command"
@@ -25,8 +68,22 @@
     }
   },
   "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "Arm": {
+          "Claw": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      }
+    },
     "transitory": {
       "Drive": {
+        "open": true
+      },
+      "Preferences": {
         "open": true
       },
       "photonvision": {

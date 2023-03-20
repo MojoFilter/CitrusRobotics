@@ -43,6 +43,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanIds;
+import frc.robot.Constants.InputChannels;
 
 /**
  *
@@ -121,16 +122,16 @@ public class DriveTrain extends SubsystemBase {
         drive.setMaxOutput(1.0);
 
         leftEncoder = new Encoder(
-            Constants.DriveTrain.LeftEncoderChannelA, 
-            Constants.DriveTrain.LeftEncoderChannelB, 
+            InputChannels.DriveLeftEncoderChannelA, 
+            InputChannels.DriveLeftEncoderChannelB, 
             false, 
             EncodingType.k4X);
         addChild("Left Encoder", leftEncoder);
         leftEncoder.setDistancePerPulse(1.0);
 
         rightEncoder = new Encoder(
-            Constants.DriveTrain.RightEncoderChannelA, 
-            Constants.DriveTrain.RightEncoderChannelB,
+            InputChannels.DriveRightEncoderChannelA, 
+            InputChannels.DriveRightEncoderChannelB,
             true,
             EncodingType.k4X);
         addChild("Right Encoder", rightEncoder);

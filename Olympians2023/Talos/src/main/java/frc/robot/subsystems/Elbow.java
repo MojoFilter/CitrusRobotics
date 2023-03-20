@@ -1,20 +1,15 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CanIds;
+import frc.robot.Constants.InputChannels;
 
-public class Elbow extends SubsystemBase {
+public class Elbow extends ArmPart {
     
-    private final CANSparkMax motor;
-
     public Elbow() {
-        this.motor = new CANSparkMax(CanIds.ElbowMotor, MotorType.kBrushless);
+        super(
+            "Elbow",
+            CanIds.ElbowMotor, 
+            InputChannels.ElbowEncoder);
     }
 
-    public void drive(double speed) {
-        this.motor.set(speed * .5);
-    }
 }

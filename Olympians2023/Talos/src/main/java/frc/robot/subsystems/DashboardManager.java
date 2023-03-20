@@ -6,7 +6,9 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -20,7 +22,7 @@ public class DashboardManager extends SubsystemBase {
 
     public void configureDashboard(
             DriveTrain driveTrain,
-            Shoulder arm,
+            Arm arm,
             Command arcadeSplitCommand,
             Command arcade1StickCommand,
             Command tankDriveCommand,
@@ -74,6 +76,11 @@ public class DashboardManager extends SubsystemBase {
         testTab.add("Navx", driveTrain.getNav());
         testTab.add("Left Encoder", driveTrain.getLeftEncoder());
         testTab.add("Right Encoder", driveTrain.getRightEncoder());
+        testTab.add("Shoulder", arm.getShoulder().getController());
+        testTab.add("Elbow", arm.getElbow().getController());
+        testTab.add("Claw", arm.getClaw().getController());
+
+        SmartDashboard.putData("Shoulder", arm.getShoulder());
     }
 
     public double getSpeedGovernor() {

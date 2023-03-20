@@ -5,11 +5,11 @@
   "MainWindow": {
     "GLOBAL": {
       "fps": "120",
-      "height": "1009",
+      "height": "3769",
       "maximized": "1",
       "style": "0",
       "userScale": "2",
-      "width": "1920",
+      "width": "2160",
       "xpos": "0",
       "ypos": "29"
     }
@@ -28,10 +28,20 @@
     }
   },
   "Window": {
+    "###/LiveWindow/Arm/Claw": {
+      "Collapsed": "0",
+      "Pos": "60,60",
+      "Size": "148,86"
+    },
     "###/Shuffleboard/Drive/Field": {
       "Collapsed": "0",
       "Pos": "275,61",
       "Size": "479,261"
+    },
+    "###/SmartDashboard/Shoulder": {
+      "Collapsed": "0",
+      "Pos": "60,60",
+      "Size": "148,86"
     },
     "###FMS": {
       "Collapsed": "0",
@@ -41,7 +51,7 @@
     "###Joysticks": {
       "Collapsed": "0",
       "Pos": "312,581",
-      "Size": "796,183"
+      "Size": "796,73"
     },
     "###NetworkTables": {
       "Collapsed": "0",

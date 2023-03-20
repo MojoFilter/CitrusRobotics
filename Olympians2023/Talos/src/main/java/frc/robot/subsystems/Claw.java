@@ -1,19 +1,15 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CanIds;
+import frc.robot.Constants.InputChannels;
 
-public class Claw extends SubsystemBase {
-    private final CANSparkMax motor;
-
+public class Claw extends ArmPart {
+   
     public Claw() {
-        this.motor = new CANSparkMax(CanIds.ClawMotor, MotorType.kBrushless);
+        super(
+            "Claw",
+            CanIds.ClawMotor, 
+            InputChannels.ClawEncoder);
     }
 
-    public void drive(double speed) {
-        this.motor.set(speed * 0.5);
-    }
 }

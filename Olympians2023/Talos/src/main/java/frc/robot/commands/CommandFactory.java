@@ -62,7 +62,7 @@ public final class CommandFactory {
             arm.enable();
         }, arm);
     }
-*/
+
     public Command getDriveShoulderCommand(DoubleSupplier speedSupplier) {
         return Commands.run(() -> this.bot.getShoulder().driveShoulder(speedSupplier.getAsDouble()), bot.getShoulder());
     }
@@ -74,7 +74,7 @@ public final class CommandFactory {
     public Command getDriveClawCommand(DoubleSupplier speedSuppler) {
         return Commands.run(() -> this.bot.getClaw().drive(speedSuppler.getAsDouble()), this.bot.getClaw());
     }
-    
+    */
 
     private Command getArcadeDriveCommand(int rotationAxis, String arcadeMode,
             String rumblePattern) {
