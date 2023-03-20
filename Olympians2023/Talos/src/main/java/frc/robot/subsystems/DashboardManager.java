@@ -76,8 +76,8 @@ public class DashboardManager extends SubsystemBase {
         testTab.add("Navx", driveTrain.getNav());
         testTab.add("Left Encoder", driveTrain.getLeftEncoder());
         testTab.add("Right Encoder", driveTrain.getRightEncoder());
-        testTab.add("Shoulder", arm.getShoulder().getController());
-        testTab.add("Elbow", arm.getElbow().getController());
+        testTab.add("Shoulder", arm.getShoulder().getEncoder());
+        testTab.add("Elbow", arm.getElbow().getEncoder());
         testTab.add("Claw", arm.getClaw().getController());
 
         SmartDashboard.putData("Shoulder", arm.getShoulder());

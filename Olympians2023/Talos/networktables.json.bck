@@ -170,7 +170,7 @@
   {
     "name": "/Preferences/Arm/Claw/P",
     "type": "double",
-    "value": 15.0,
+    "value": 5.0,
     "properties": {
       "persistent": true
     }

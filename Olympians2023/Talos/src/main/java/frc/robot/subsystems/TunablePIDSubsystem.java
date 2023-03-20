@@ -1,15 +1,10 @@
 package frc.robot.subsystems;
 
-import java.util.EnumSet;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.DoubleEntry;
-import edu.wpi.first.networktables.DoubleSubscriber;
-import edu.wpi.first.networktables.DoubleTopic;
-import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
@@ -39,7 +34,7 @@ public abstract class TunablePIDSubsystem extends ProfiledPIDSubsystem {
          */
         this.baseTopic = baseTopic;
 
-        //Preferences.initDouble(getPTopic(baseTopic), 0);
+        // Preferences.initDouble(getPTopic(baseTopic), 0);
         /*
          * DoubleTopic topic;
          * var nt = NetworkTableInstance.getDefault();
@@ -63,13 +58,17 @@ public abstract class TunablePIDSubsystem extends ProfiledPIDSubsystem {
     @Override
     public void periodic() {
         super.periodic();
-        var topic = getPTopic(this.baseTopic);
-        var p = Preferences.getDouble(topic, 0);
-        this.setP(p);
-       /* var value = this.pValue.getAndSet(null);
-        if (value != null) {
-            this.setP(value);
-        }*/
+        this.update(TunablePIDSubsystem::getPTopic, this::setP);
+        this.update(TunablePIDSubsystem::getITopic, this::setI);
+        this.update(TunablePIDSubsystem::getDTopic, this::setD);
+        this.update(TunablePIDSubsystem::getMaxVelocityTopic, this::setMaxVelocity);
+        this.update(TunablePIDSubsystem::getMaxAccelerationTopic, this::setMaxAcceleration);
+    }
+
+    private void update(Function<String, String> getTopic, Consumer<Double> set) {
+        var topic = getTopic.apply(this.baseTopic);
+        var val = Preferences.getDouble(topic, 0);
+        set.accept(val);
     }
 
     private void setP(double p) {
@@ -143,6 +142,8 @@ public abstract class TunablePIDSubsystem extends ProfiledPIDSubsystem {
         Preferences.initDouble(getPTopic(baseTopic), 0);
         Preferences.initDouble(getITopic(baseTopic), 0);
         Preferences.initDouble(getDTopic(baseTopic), 0);
+        Preferences.initDouble(getMaxVelocityTopic(baseTopic), 0);
+        Preferences.initDouble(getMaxAccelerationTopic(baseTopic), 0);
         return new ProfiledPIDController(
                 getP(baseTopic),
                 getI(baseTopic),

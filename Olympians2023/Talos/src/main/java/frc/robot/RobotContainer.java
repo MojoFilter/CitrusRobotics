@@ -11,11 +11,8 @@ import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.CommandFactory;
 import frc.robot.commands.PlayStartupCommand;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DashboardManager;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Elbow;
-import frc.robot.subsystems.Shoulder;
 import frc.robot.subsystems.SoundBoard;
 import frc.robot.util.Rumbler;
 

@@ -39,8 +39,8 @@ public final class Constants {
         public static final int DriveLeftEncoderChannelA = 2;
         public static final int DriveLeftEncoderChannelB = 3;
 
-        public static final int ShoulderEncoder = 4;
-        public static final int ElbowEncoder = 5;
+        public static final int ShoulderEncoder = 5;
+        public static final int ElbowEncoder = 4;
         public static final int ClawEncoder = 6;
     }
 
