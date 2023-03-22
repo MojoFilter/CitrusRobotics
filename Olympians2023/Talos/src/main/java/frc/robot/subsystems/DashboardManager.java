@@ -45,7 +45,7 @@ public class DashboardManager extends SubsystemBase {
                 .withPosition(2, 0)
                 .getEntry();
 
-        driveTab.add(driveTrain.getGyro())
+        driveTab.add(driveTrain.getNav())
                 .withSize(2, 2)
                 .withPosition(6, 0);
 
@@ -55,9 +55,6 @@ public class DashboardManager extends SubsystemBase {
 
         driveTab.add(driveTrain.getDrive())
                 .withPosition(6, 2);
-
-        driveTab.add(driveTrain.getAccelerometer())
-                .withPosition(6, 4);
                 
 /*         driveTab.addCamera(
             Constants.Dashboard.TargetCameraTitle,
@@ -77,8 +74,7 @@ public class DashboardManager extends SubsystemBase {
         testTab.add("Left Encoder", driveTrain.getLeftEncoder());
         testTab.add("Right Encoder", driveTrain.getRightEncoder());
         testTab.add("Shoulder", arm.getShoulder().getEncoder());
-        testTab.add("Elbow", arm.getElbow().getEncoder());
-        testTab.add("Claw", arm.getClaw().getController());
+        testTab.add("Elbow", arm.getElbow());
 
         SmartDashboard.putData("Shoulder", arm.getShoulder());
     }

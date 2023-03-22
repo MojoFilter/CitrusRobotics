@@ -170,4 +170,8 @@ public class RobotContainer {
     return m_driveTrain;
   }
 
+  public Arm getArm() {
+    return this.arm;
+  }
+
 }

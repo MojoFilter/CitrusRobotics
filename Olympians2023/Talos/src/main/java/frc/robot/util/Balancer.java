@@ -1,22 +1,25 @@
 package frc.robot.util;
 
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import frc.robot.Constants.Balance;
 
-public class Balancer {
-    private final Accelerometer accel;
+public abstract class Balancer {
+    protected int state;
+    protected int ticks;
 
-    private int state;
-    private int ticks;
-
-    public Balancer(Accelerometer accel) {
-        this.accel = accel;
-        this.reset();
-    }
-
+    
     public void reset() {
         this.state = 0;
         this.ticks = 0;
+    }
+
+    protected abstract double getRoll();
+    protected abstract double getPitch();
+
+    private double getTilt() {
+        var pitch = this.getPitch();
+        var roll = this.getRoll();
+        var direction = pitch + roll > 0 ? 1 : -1;
+        return Math.sqrt(Math.pow(pitch, 2) + Math.pow(roll, 2)) * direction;
     }
 
     public double getBalanceSpeed() {
@@ -126,23 +129,7 @@ public class Balancer {
         return 0;
     }
 
-    private double getPitch() {
-        var ac = this.accel;
-        return Math.atan2((-ac.getX()),
-                Math.sqrt(ac.getY() * ac.getY() + ac.getZ() * ac.getZ())) * Balance.RAD2DEG;
-    }
-
-    private double getRoll() {
-        return Math.atan2(this.accel.getY(), this.accel.getZ()) * Balance.RAD2DEG;
-    }
-
-    private double getTilt() {
-        var pitch = this.getPitch();
-        var roll = this.getRoll();
-        var direction = pitch + roll > 0 ? 1 : -1;
-        return Math.sqrt(Math.pow(pitch, 2) + Math.pow(roll, 2)) * direction;
-    }
-
+    
     private static int SecondsToTicks(double seconds) {
         return (int) (seconds * Balance.TicksPerSecond);
     }

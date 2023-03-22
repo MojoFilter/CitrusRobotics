@@ -3,9 +3,11 @@ package frc.robot.subsystems;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
 public abstract class TunablePIDSubsystem extends ProfiledPIDSubsystem {
@@ -65,7 +67,7 @@ public abstract class TunablePIDSubsystem extends ProfiledPIDSubsystem {
         this.update(TunablePIDSubsystem::getMaxAccelerationTopic, this::setMaxAcceleration);
     }
 
-    private void update(Function<String, String> getTopic, Consumer<Double> set) {
+     private void update(Function<String, String> getTopic, Consumer<Double> set) {
         var topic = getTopic.apply(this.baseTopic);
         var val = Preferences.getDouble(topic, 0);
         set.accept(val);
@@ -152,5 +154,4 @@ public abstract class TunablePIDSubsystem extends ProfiledPIDSubsystem {
                         getMaxVelocity(baseTopic),
                         getMaxAcceleration(baseTopic)));
     }
-
 }

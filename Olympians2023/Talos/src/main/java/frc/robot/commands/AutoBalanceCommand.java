@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.util.Balancer;
+import frc.robot.util.GyroBalancer;
 
 public class AutoBalanceCommand extends CommandBase {
     
@@ -12,7 +13,7 @@ public class AutoBalanceCommand extends CommandBase {
     public AutoBalanceCommand(DriveTrain driveTrain) {
         this.addRequirements(driveTrain);
         this.driveTrain = driveTrain;
-        this.balancer = new Balancer(driveTrain.getAccelerometer());
+        this.balancer = new GyroBalancer(driveTrain.getNav());
     }
 
     @Override

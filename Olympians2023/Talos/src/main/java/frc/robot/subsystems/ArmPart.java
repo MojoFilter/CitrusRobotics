@@ -14,19 +14,25 @@ public abstract class ArmPart extends TunablePIDSubsystem {
     private final CANSparkMax motor;
     private final DutyCycleEncoder encoder;
     private final ArmFeedforward feedforward;
+    private final double positionOffset;
 
     private final DoublePublisher absPublisher;
     
     public ArmPart(
         String name,
             int motorCANId,
-            int encoderPWMChannel) {
+            int encoderPWMChannel,
+            double positionOffset,
+            double staticGain,
+            double gravityGain,
+            double velocityGain) {
         super("Arm/" + name);
         this.setName(name);
+        this.positionOffset = positionOffset;
         this.motor = new CANSparkMax(motorCANId, MotorType.kBrushless);
         this.encoder = new DutyCycleEncoder(encoderPWMChannel);
         this.encoder.setDistancePerRotation(360);
-        this.feedforward = new ArmFeedforward(0, 0, 0);
+        this.feedforward = new ArmFeedforward(staticGain, gravityGain, velocityGain);
 
         var nt = NetworkTableInstance.getDefault();
         this.absPublisher = nt.getDoubleTopic("Arm/" + name + "/abs").publish();
@@ -48,6 +54,19 @@ public abstract class ArmPart extends TunablePIDSubsystem {
         return this.motor;
     }
 
+    /**
+     * Relative position in degrees offset from from the home position
+     * @return
+     */
+    public double getPosition() {
+        return this.encoder.getAbsolutePosition() - this.positionOffset;
+    }
+
+    public void setPosition(double position) {        
+        this.setGoal(position);
+        this.enable();
+    }
+
     @Override
     protected void useOutput(double output, State setpoint) {
         double feedforward = this.feedforward.calculate(setpoint.position, setpoint.velocity);
@@ -56,7 +75,7 @@ public abstract class ArmPart extends TunablePIDSubsystem {
 
     @Override
     protected double getMeasurement() {
-        return this.encoder.getAbsolutePosition();
+        return this.getPosition();
     }
 
     @Override

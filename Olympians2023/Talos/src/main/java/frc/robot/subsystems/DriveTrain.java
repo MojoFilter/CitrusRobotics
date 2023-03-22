@@ -30,6 +30,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
@@ -210,6 +212,7 @@ public class DriveTrain extends SubsystemBase {
         this.camServer = new MjpegServer("Drive Camera Server", 1181);
         this.driveCamera = new UsbCamera("Drive Camera", 0);
         this.camServer.setSource(driveCamera);
+
     }
 
     @Override
@@ -308,11 +311,11 @@ public class DriveTrain extends SubsystemBase {
         return this.fieldApproximation;
     }
 
-    public ADXRS450_Gyro getGyro() {
-        return this.gyro;
+    public Gyro getGyro() {
+        return this.navx;
     }
 
-    public BuiltInAccelerometer getAccelerometer() {
+    public Accelerometer getAccelerometer() {
         return this.accelerometer;
     }
 

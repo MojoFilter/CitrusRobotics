@@ -131,21 +131,37 @@ public final class Constants {
             public static final double MaxVelocityRadsPerSecond = Math.PI / 4.0;
             public static final double MaxAccelerationRadsPerSecondSquared = 1.0;
 
+            public static final double PositionOffsetDegrees = 0;
+
             // THESE NEED REAL VALUES FROM SYSTEM IDENTIFICATION
-            public static final double SVolts = 1;
-            public static final double GVolts = 1;
-            public static final double VVoltSecondPerRad = 0.5;
-            public static final double AVoltSecondSquaredPerRad = 0.1;
+            public static final double StaticGain = 1;
+            public static final double GravityGain = 1;
+            public static final double VelocityGain = 0.5;
+            //public static final double AVoltSecondSquaredPerRad = 0.1;
         }
 
         public static final class ElbowSettings {
             public static final double MaxVelocityRadsPerSecond = Math.PI / 4.0;
             public static final double MaxAccelerationRadsPerSecondSquared = 1.0;
+            public static final double PositionOffsetDegrees = 0;
+
+            
+            // THESE NEED REAL VALUES FROM SYSTEM IDENTIFICATION
+            public static final double StaticGain = 1;
+            public static final double GravityGain = 1;
+            public static final double VelocityGain = 0.5;
         }
 
         public static final class ClawSettings {
             public static final double MaxVelocityRadsPerSecond = Math.PI / 4.0;
             public static final double MaxAccelerationRadsPerSecondSquared = 1.0;
+            public static final double PositionOffsetDegrees = 0;
+
+            
+            // THESE NEED REAL VALUES FROM SYSTEM IDENTIFICATION
+            public static final double StaticGain = 1;
+            public static final double GravityGain = 1;
+            public static final double VelocityGain = 0.5;
         }
     }
 

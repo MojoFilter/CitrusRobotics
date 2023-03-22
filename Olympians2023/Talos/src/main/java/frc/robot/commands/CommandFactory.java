@@ -51,6 +51,13 @@ public final class CommandFactory {
     public Command getAutoBalanceCommand() {
         return new AutoBalanceCommand(this.bot.getDriveTrain());
     }
+
+    public Command getElbowHoldAbsolutePositionCommand(double absolutePosition) {
+        var arm = this.bot.getArm();
+        var shoulder = arm.getShoulder();
+        var elbow = arm.getElbow();
+        return Commands.run(()->elbow.setPosition(absolutePosition-shoulder.getPosition()), elbow);
+    }
 /*
     public Command getArmTrackSetpointCommand() {
         var arm = this.bot.getArm();    
