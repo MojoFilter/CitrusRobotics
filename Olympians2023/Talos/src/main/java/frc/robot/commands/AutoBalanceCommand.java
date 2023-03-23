@@ -3,17 +3,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.util.Balancer;
-import frc.robot.util.GyroBalancer;
+import frc.robot.util.NavxBalancer;
 
 public class AutoBalanceCommand extends CommandBase {
-    
+
     private final DriveTrain driveTrain;
     private final Balancer balancer;
 
     public AutoBalanceCommand(DriveTrain driveTrain) {
         this.addRequirements(driveTrain);
         this.driveTrain = driveTrain;
-        this.balancer = new GyroBalancer(driveTrain.getNav());
+        this.balancer = new NavxBalancer(driveTrain.getNav());
     }
 
     @Override

@@ -2,17 +2,23 @@ package frc.robot.util;
 
 import frc.robot.Constants.Balance;
 
+/*
+ * This type provides a state-machine based controller for
+ * managing autonomous mode drive controls. This will attmept to
+ * balance on the charging station after optionally attempting to
+ * dump a cone into the scoring zone.
+ */
 public abstract class Balancer {
     protected int state;
     protected int ticks;
 
-    
     public void reset() {
         this.state = 0;
         this.ticks = 0;
     }
 
     protected abstract double getRoll();
+
     protected abstract double getPitch();
 
     private double getTilt() {
@@ -129,7 +135,6 @@ public abstract class Balancer {
         return 0;
     }
 
-    
     private static int SecondsToTicks(double seconds) {
         return (int) (seconds * Balance.TicksPerSecond);
     }

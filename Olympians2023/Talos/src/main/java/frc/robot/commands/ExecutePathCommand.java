@@ -1,11 +1,17 @@
 package frc.robot.commands;
 
-import com.pathplanner.lib.*;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
 
-import edu.wpi.first.math.controller.*;
-import edu.wpi.first.math.trajectory.*;
-import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.*;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
+import frc.robot.Constants.DriveSettings;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -32,13 +38,13 @@ public class ExecutePathCommand extends SequentialCommandGroup {
                 drive::getPose,
                 new RamseteController(Constants.Auto.RamseteB, Constants.Auto.RamseteZ),
                 new SimpleMotorFeedforward(
-                        Constants.DriveTrain.StaticGainVolts,
-                        Constants.DriveTrain.VelocityGainVolts,
-                        Constants.DriveTrain.AccelerationGainVolts),
-                Constants.DriveTrain.DriveKinematics,
+                        DriveSettings.StaticGainVolts,
+                        DriveSettings.VelocityGainVolts,
+                        DriveSettings.AccelerationGainVolts),
+                DriveSettings.DriveKinematics,
                 drive::getWheelSpeeds,
-                new PIDController(Constants.DriveTrain.PDriveVelocity, 0, 0),
-                new PIDController(Constants.DriveTrain.PDriveVelocity, 0, 0),
+                new PIDController(DriveSettings.PDriveVelocity, 0, 0),
+                new PIDController(DriveSettings.PDriveVelocity, 0, 0),
                 // RamseteCommand passes volts to the callback
                 drive::tankDriveVolts,
                 drive);

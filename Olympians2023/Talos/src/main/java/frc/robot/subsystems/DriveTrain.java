@@ -45,6 +45,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanIds;
+import frc.robot.Constants.DriveSettings;
 import frc.robot.Constants.InputChannels;
 
 /**
@@ -94,50 +95,39 @@ public class DriveTrain extends SubsystemBase {
     *
     */
     public DriveTrain() {
-        left1 = new CANSparkMax(CanIds.LeftFrontMotor, MotorType.kBrushed);
-        //addChild("Left 1", left1);
-        left1.setInverted(false);
+        this.left1 = new CANSparkMax(CanIds.LeftFrontMotor, MotorType.kBrushed);
+        this.left2 = new CANSparkMax(CanIds.LeftRearMotor, MotorType.kBrushed);
+        this.leftController = new MotorControllerGroup(left1, left2);
+        this.leftController.setInverted(DriveSettings.IsLeftDriveInverted);
+        this.addChild("Left Controller", leftController);
 
-        left2 = new CANSparkMax(CanIds.LeftRearMotor, MotorType.kBrushed);
-        //addChild("Left 2", left2);
-        left2.setInverted(false);
+        this.right1 = new CANSparkMax(CanIds.RightFrontMotor, MotorType.kBrushed);
+        this.right2 = new CANSparkMax(CanIds.RightRearMotor, MotorType.kBrushed);
+        this.rightController = new MotorControllerGroup(right1, right2);
+        this.rightController.setInverted(DriveSettings.IsRightDriveInverted);
+        this.addChild("Right Controller", rightController);
 
-        leftController = new MotorControllerGroup(left1, left2);
-        this.leftController.setInverted(true);
-        addChild("Left Controller", leftController);
+        this.drive = new DifferentialDrive(leftController, rightController);
+        this.addChild("Drive", drive);
+        this.drive.setSafetyEnabled(true);
+        this.drive.setExpiration(0.1);
+        this.drive.setMaxOutput(1.0);
 
-        right1 = new CANSparkMax(CanIds.RightFrontMotor, MotorType.kBrushed);       
-        // addChild("Right 1", right1);
-        right1.setInverted(false);
+        this.leftEncoder = new Encoder(
+                InputChannels.DriveLeftEncoderChannelA,
+                InputChannels.DriveLeftEncoderChannelB,
+                DriveSettings.IsLeftDriveInverted,
+                EncodingType.k4X);
+        this.addChild("Left Encoder", leftEncoder);
+        this.leftEncoder.setDistancePerPulse(DriveSettings.EncoderDistancePerPulse);
 
-        right2 = new CANSparkMax(CanIds.RightRearMotor, MotorType.kBrushed);
-        //addChild("Right 2", right2);
-        right2.setInverted(false);
-
-        rightController = new MotorControllerGroup(right1, right2);
-        addChild("Right Controller", rightController);
-
-        drive = new DifferentialDrive(leftController, rightController);
-        addChild("Drive", drive);
-        drive.setSafetyEnabled(true);
-        drive.setExpiration(0.1);
-        drive.setMaxOutput(1.0);
-
-        leftEncoder = new Encoder(
-            InputChannels.DriveLeftEncoderChannelA, 
-            InputChannels.DriveLeftEncoderChannelB, 
-            false, 
-            EncodingType.k4X);
-        addChild("Left Encoder", leftEncoder);
-        leftEncoder.setDistancePerPulse(1.0);
-
-        rightEncoder = new Encoder(
-            InputChannels.DriveRightEncoderChannelA, 
-            InputChannels.DriveRightEncoderChannelB,
-            true,
-            EncodingType.k4X);
-        addChild("Right Encoder", rightEncoder);
-        rightEncoder.setDistancePerPulse(1.0);
+        this.rightEncoder = new Encoder(
+                InputChannels.DriveRightEncoderChannelA,
+                InputChannels.DriveRightEncoderChannelB,
+                DriveSettings.IsRightEncoderInverted,
+                EncodingType.k4X);
+        this.addChild("Right Encoder", rightEncoder);
+        this.rightEncoder.setDistancePerPulse(DriveSettings.EncoderDistancePerPulse);
 
         this.gyro = new ADXRS450_Gyro();
         this.addChild("Gyro", this.gyro);
@@ -164,10 +154,8 @@ public class DriveTrain extends SubsystemBase {
                 Constants.Vision.TargetCameraResolutionHeight,
                 Constants.Vision.TargetCameraMinTargetArea);
 
-        this.leftEncoder.setDistancePerPulse(Constants.DriveTrain.EncoderDistancePerPulse); // not sure what these
-                                                                                            // constants should be
-        this.rightEncoder.setDistancePerPulse(Constants.DriveTrain.EncoderDistancePerPulse);
         this.resetEncoders();
+
         this.field = new Field2d();
         this.fieldApproximation = new Field2d();
 
@@ -177,7 +165,7 @@ public class DriveTrain extends SubsystemBase {
                 rightEncoder.getDistance());
 
         this.poseEstimator = new DifferentialDrivePoseEstimator(
-                Constants.DriveTrain.DriveKinematics,
+                DriveSettings.DriveKinematics,
                 this.gyro.getRotation2d(),
                 this.leftEncoder.getDistance(),
                 this.rightEncoder.getDistance(),
@@ -185,21 +173,22 @@ public class DriveTrain extends SubsystemBase {
                 VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
                 VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
 
-        this.feedforward = new SimpleMotorFeedforward(1, 3);
-        this.leftPIDController = new PIDController(1, 0, 0);
-        this.rightPIDController = new PIDController(1, 0, 0);
+        this.feedforward = new SimpleMotorFeedforward(DriveSettings.StaticGainVolts, DriveSettings.VelocityGainVolts);
+        this.leftPIDController = new PIDController(DriveSettings.LinearP, DriveSettings.LinearI, DriveSettings.LinearD);
+        this.rightPIDController = new PIDController(DriveSettings.LinearP, DriveSettings.LinearI,
+                DriveSettings.LinearD);
 
         try {
             this.fieldTags = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
             /*
-            List<AprilTag> testTags = new ArrayList<AprilTag>();
-            testTags.add(new AprilTag(6, new Pose3d(8, 3, 1, new Rotation3d())));
-            var length = Units.feetToMeters(54) + Units.inchesToMeters(3.25);
-            var width = Units.feetToMeters(26) + Units.inchesToMeters(3.5);
-            this.fieldTags = new AprilTagFieldLayout(testTags, length, width);
-            */
+             * List<AprilTag> testTags = new ArrayList<AprilTag>();
+             * testTags.add(new AprilTag(6, new Pose3d(8, 3, 1, new Rotation3d())));
+             * var length = Units.feetToMeters(54) + Units.inchesToMeters(3.25);
+             * var width = Units.feetToMeters(26) + Units.inchesToMeters(3.5);
+             * this.fieldTags = new AprilTagFieldLayout(testTags, length, width);
+             */
             this.visionSim.addVisionTargets(this.fieldTags);
-        } catch (Exception ioe) {//IOException ioe) {
+        } catch (Exception ioe) {// IOException ioe) {
             ioe.printStackTrace();
             throw new RuntimeException();
         }
@@ -222,9 +211,6 @@ public class DriveTrain extends SubsystemBase {
         this.updateOdometry();
         this.field.setRobotPose(odometry.getPoseMeters());
         this.fieldApproximation.setRobotPose(this.poseEstimator.getEstimatedPosition());
-        SmartDashboard.putNumber("accelerometer/x", this.accelerometer.getX());
-        SmartDashboard.putNumber("accelerometer/y", this.accelerometer.getY());
-        SmartDashboard.putNumber("accelerometer/z", this.accelerometer.getZ());
     }
 
     @Override
@@ -245,8 +231,6 @@ public class DriveTrain extends SubsystemBase {
         gyroSim.setAngle(-driveSim.getHeading().getDegrees());
     }
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
         drive.tankDrive(leftSpeed, rightSpeed);
@@ -273,7 +257,7 @@ public class DriveTrain extends SubsystemBase {
      * @param rotation    Angular velocity in rad/s.
      */
     public void directDrive(double linearSpeed, double rotation) {
-        var wheelSpeeds = Constants.DriveTrain.DriveKinematics
+        var wheelSpeeds = DriveSettings.DriveKinematics
                 .toWheelSpeeds(new ChassisSpeeds(linearSpeed, 0.0, rotation));
         this.setSpeeds(wheelSpeeds);
     }
@@ -338,7 +322,7 @@ public class DriveTrain extends SubsystemBase {
     public Encoder getRightEncoder() {
         return this.rightEncoder;
     }
- 
+
     private void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
         final double leftFeedforward = this.feedforward.calculate(speeds.leftMetersPerSecond);
         final double rightFeedforward = this.feedforward.calculate(speeds.rightMetersPerSecond);

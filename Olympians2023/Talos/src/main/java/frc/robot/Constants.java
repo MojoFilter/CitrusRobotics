@@ -44,11 +44,17 @@ public final class Constants {
         public static final int ClawEncoder = 6;
     }
 
-    public static final class DriveTrain {
+    public static final class DriveSettings {
         public static final double WheelDiameterMeters = 0.15;
         public static final int EncoderCPR = 1024;
         public static final double EncoderDistancePerPulse = (WheelDiameterMeters * Math.PI) / (double) EncoderCPR;
         
+        public static final boolean IsLeftEncoderInverted = false;
+        public static final boolean IsLeftDriveInverted = true;
+
+        public static final boolean IsRightEncoderInverted = true;
+        public static final boolean IsRightDriveInverted = false;
+
         public static final double DefaultSpeedGovernor = 0.65;
         public static final double MaxSpeed = 3.0; // m/s
         public static final double MaxAngularSpeed = 2 * Math.PI; // rad/s
@@ -73,8 +79,10 @@ public final class Constants {
 
         // PID gain values
         public static final double LinearP = 0.8;
+        public static final double LinearI = 0.0;
         public static final double LinearD = 1.0;
         public static final double AngularP = 0.4;
+        public static final double AngularI = 0.0;
         public static final double AngularD = 0.0;
     }
 

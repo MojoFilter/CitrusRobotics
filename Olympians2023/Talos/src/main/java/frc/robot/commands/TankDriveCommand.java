@@ -6,6 +6,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.DriveSettings;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -20,16 +21,16 @@ public class TankDriveCommand extends CommandBase {
     private final SlewRateLimiter rightLimiter;
 
     public TankDriveCommand(double constantLeftInput, double constantRightInput, DriveTrain driveTrain) {
-        this(()->constantLeftInput, ()->constantRightInput, driveTrain);
+        this(() -> constantLeftInput, () -> constantRightInput, driveTrain);
     }
-    
+
     public TankDriveCommand(DoubleSupplier leftInput, DoubleSupplier rightInput, DriveTrain driveTrain) {
         this.driveTrain = driveTrain;
         this.leftInput = leftInput;
         this.rightInput = rightInput;
         this.addRequirements(driveTrain);
-        this.leftLimiter = new SlewRateLimiter(Constants.DriveTrain.SpeedRateLimit);
-        this.rightLimiter = new SlewRateLimiter(Constants.DriveTrain.SpeedRateLimit);
+        this.leftLimiter = new SlewRateLimiter(DriveSettings.SpeedRateLimit);
+        this.rightLimiter = new SlewRateLimiter(DriveSettings.SpeedRateLimit);
     }
 
     // Called when the command is initially scheduled.

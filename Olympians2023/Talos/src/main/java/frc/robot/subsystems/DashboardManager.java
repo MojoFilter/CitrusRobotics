@@ -6,13 +6,12 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Dashboard;
+import frc.robot.Constants.DriveSettings;
 
 public class DashboardManager extends SubsystemBase {
 
@@ -23,6 +22,44 @@ public class DashboardManager extends SubsystemBase {
     public void configureDashboard(
             DriveTrain driveTrain,
             Arm arm,
+            Command arcadeSplitCommand,
+            Command arcade1StickCommand,
+            Command tankDriveCommand,
+            Command curvatureDriveCommand) {
+        this.setupDriveTab(driveTrain, arcadeSplitCommand, arcade1StickCommand, tankDriveCommand,
+                curvatureDriveCommand);
+        this.setupTestTab(driveTrain, arm);
+    }
+
+    public double getSpeedGovernor() {
+        return this.speedGovernorSource.getDouble(DriveSettings.DefaultSpeedGovernor);
+    }
+
+    @Override
+    public void periodic() {
+        this.updateDriveMode();
+    }
+
+    private void updateDriveMode() {
+        var selectedCommand = this.driveModeChooser.getSelected();
+        if (selectedCommand != this.currentDriveCommand) {
+            this.currentDriveCommand = selectedCommand;
+            this.currentDriveCommand.schedule();
+        }
+    }
+
+    private void setupTestTab(DriveTrain driveTrain, Arm arm) {
+        var testTab = Shuffleboard.getTab(Dashboard.TestTabName);
+
+        testTab.add("Navx", driveTrain.getNav());
+        testTab.add("Left Encoder", driveTrain.getLeftEncoder());
+        testTab.add("Right Encoder", driveTrain.getRightEncoder());
+        testTab.add("Shoulder", arm.getShoulder().getEncoder());
+        testTab.add("Elbow", arm.getElbow());
+    }
+
+    private void setupDriveTab(
+            DriveTrain driveTrain,
             Command arcadeSplitCommand,
             Command arcade1StickCommand,
             Command tankDriveCommand,
@@ -55,44 +92,11 @@ public class DashboardManager extends SubsystemBase {
 
         driveTab.add(driveTrain.getDrive())
                 .withPosition(6, 2);
-                
-/*         driveTab.addCamera(
-            Constants.Dashboard.TargetCameraTitle,
-            Constants.Dashboard.TargetCameraName,
-            Constants.Dashboard.TargetCameraUrls); */
-            
+
         driveTab.addCamera(
-            Constants.Dashboard.DriveCameraTitle,
-            Constants.Dashboard.DriveCameraName,
-            Constants.Dashboard.DriveCameraUrls).withPosition(8, 0); 
-        //Shuffleboard.selectTab(Constants.Dashboard.DriveTabName);
+                Constants.Dashboard.DriveCameraTitle,
+                Constants.Dashboard.DriveCameraName,
+                Constants.Dashboard.DriveCameraUrls).withPosition(8, 0);
 
-        var testTab = Shuffleboard.getTab(Dashboard.TestTabName);
-       // testTab.add("Arm", arm.getMechanism());
-
-        testTab.add("Navx", driveTrain.getNav());
-        testTab.add("Left Encoder", driveTrain.getLeftEncoder());
-        testTab.add("Right Encoder", driveTrain.getRightEncoder());
-        testTab.add("Shoulder", arm.getShoulder().getEncoder());
-        testTab.add("Elbow", arm.getElbow());
-
-        SmartDashboard.putData("Shoulder", arm.getShoulder());
-    }
-
-    public double getSpeedGovernor() {
-        return this.speedGovernorSource.getDouble(Constants.DriveTrain.DefaultSpeedGovernor);
-    }
-
-    @Override
-    public void periodic() {
-        this.updateDriveMode();
-    }
-
-    private void updateDriveMode() {
-        var selectedCommand = this.driveModeChooser.getSelected();
-        if (selectedCommand != this.currentDriveCommand) {
-            this.currentDriveCommand = selectedCommand;
-            this.currentDriveCommand.schedule();
-        }
     }
 }

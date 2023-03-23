@@ -3,58 +3,22 @@ package frc.robot.subsystems;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
+/**
+ * Provides a profiled PID subsystem which will use preferences
+ * for PID and constraint values to allow for live tuning.
+ */
 public abstract class TunablePIDSubsystem extends ProfiledPIDSubsystem {
 
     private String baseTopic;
 
-    /*
-     * private DoubleEntry pEntry;
-     * private DoubleEntry iEntry;
-     * private DoubleEntry dEntry;
-     * 
-     * private final DoubleSubscriber pSub;
-     * private final AtomicReference<Double> pValue;
-     */
     public TunablePIDSubsystem(String baseTopic) {
         super(createController(baseTopic), 0);
-        /*
-         * super(new ProfiledPIDController(
-         * getP(baseTopic),
-         * getI(baseTopic),
-         * getD(baseTopic),
-         * new TrapezoidProfile.Constraints(
-         * getMaxVelocity(baseTopic),
-         * getMaxAcceleration(baseTopic))),
-         * 0);
-         */
         this.baseTopic = baseTopic;
-
-        // Preferences.initDouble(getPTopic(baseTopic), 0);
-        /*
-         * DoubleTopic topic;
-         * var nt = NetworkTableInstance.getDefault();
-         * 
-         * this.pValue = new AtomicReference<Double>();
-         * var pTopic = getPTopic(baseTopic);
-         * this.pSub =
-         * nt.getDoubleTopic(getPTopic(baseTopic)).getEntry(getP(baseTopic));
-         * nt.addListener(this.pSub, EnumSet.of(NetworkTableEvent.Kind.kValueAll),
-         * event -> this.pValue.set(event.valueData.value.getDouble()));
-         * 
-         * 
-         * topic = nt.getDoubleTopic(getITopic(baseTopic));
-         * this.iEntry = topic.getEntry(getI(baseTopic));
-         * 
-         * topic = nt.getDoubleTopic(getDTopic(baseTopic));
-         * this.dEntry = topic.getEntry(getD(baseTopic));
-         */
     }
 
     @Override

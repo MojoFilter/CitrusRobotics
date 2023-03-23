@@ -9,6 +9,11 @@ import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
+/*
+ * This type acts as a base for both the shoulder and
+ * elbow sections of the arm, which have the same basic
+ * parametric configuration.
+ */
 public abstract class ArmPart extends TunablePIDSubsystem {
 
     private final CANSparkMax motor;
