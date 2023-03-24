@@ -2,9 +2,7 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
@@ -18,8 +16,6 @@ public class ArcadeDriveCommand extends CommandBase {
     private final DoubleSupplier rotationInput;
     private final String arcadeMode;
     private final String rumblePattern;
-    private final SlewRateLimiter speedLimiter;
-    private final SlewRateLimiter rotationLimiter;
 
     public ArcadeDriveCommand(DoubleSupplier speedInput, DoubleSupplier rotationInput, String arcadeMode, String rumblePattern,
             DriveTrain driveTrain) {
@@ -29,8 +25,6 @@ public class ArcadeDriveCommand extends CommandBase {
         this.rumblePattern = rumblePattern;
         this.driveTrain = driveTrain;
         addRequirements(driveTrain);
-        this.speedLimiter = new SlewRateLimiter(Constants.DriveTrain.SpeedRateLimit);
-        this.rotationLimiter = new SlewRateLimiter(Constants.DriveTrain.RotationRateLimit);
     }
 
     // Called when the command is initially scheduled.
@@ -48,8 +42,8 @@ public class ArcadeDriveCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        final var speed = this.speedInput.getAsDouble(); //this.speedLimiter.calculate(this.speedInput.getAsDouble());
-        final var rotation = this.rotationInput.getAsDouble();// this.rotationLimiter.calculate(this.rotationInput.getAsDouble());
+        final var speed = this.speedInput.getAsDouble(); 
+        final var rotation = this.rotationInput.getAsDouble();
         this.driveTrain.arcadeDrive(speed, rotation);
     }
 

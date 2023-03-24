@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutonomousCommand;
+import frc.robot.Constants.DriveSettings;
 import frc.robot.commands.CommandFactory;
 import frc.robot.commands.PlayStartupCommand;
 import frc.robot.subsystems.Arm;
@@ -35,7 +35,7 @@ public class RobotContainer {
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final Arm arm = new Arm();
 
-  // Joysticks
+  // Controllers
   private final XboxController xboxController1 = new XboxController(0);
   private final Joystick joystick = new Joystick(1);
 
@@ -75,10 +75,6 @@ public class RobotContainer {
         }));
         */
 
-    // Configure autonomous sendable chooser
-    // this should be set up in the dashboard manager
-    m_chooser.addOption("Autonomous Command", new AutonomousCommand(m_driveTrain));
-    m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand(m_driveTrain));
 
     SmartDashboard.putData("Auto Mode", m_chooser);
     this.dashboardManager.configureDashboard(
@@ -103,9 +99,10 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // Disable twist by default because the arm is sketchy.
     // Create some buttons
     final JoystickButton twistButton = new JoystickButton(xboxController1, 8);
-    twistButton.onTrue(this.commandFactory.getTwistCommand());
+    //twistButton.onTrue(this.commandFactory.getTwistCommand());
 
     /*
      * final var trackArmButton = new
@@ -159,11 +156,11 @@ public class RobotContainer {
   }
 
   public double getMaxSpeed() {
-    return Constants.DriveTrain.MaxSpeed * this.getSpeedGovernor();
+    return DriveSettings.MaxSpeed * this.getSpeedGovernor();
   }
 
   public double getMaxAngularSpeed() {
-    return Constants.DriveTrain.MaxAngularSpeed;
+    return DriveSettings.MaxAngularSpeed;
   }
 
   public DriveTrain getDriveTrain() {

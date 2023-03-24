@@ -6,13 +6,13 @@ public class Arm extends SubsystemBase {
 
     private final Shoulder shoulder;
     private final Elbow elbow;
-    private final ManualClaw claw;
+    private final Claw claw;
 
     public Arm() {
         super();
         this.shoulder = new Shoulder();
         this.elbow = new Elbow();
-        this.claw = new ManualClaw();
+        this.claw = new Claw();
         this.addChild("Shoulder", this.shoulder);
         this.addChild("Elbow", this.elbow);
         this.addChild("Claw", this.claw);
@@ -26,7 +26,7 @@ public class Arm extends SubsystemBase {
         return this.elbow;
     }
 
-    public ManualClaw getClaw() {
+    public Claw getClaw() {
         return this.claw;
     }
 }
