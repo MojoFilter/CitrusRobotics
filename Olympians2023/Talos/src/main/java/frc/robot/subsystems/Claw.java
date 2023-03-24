@@ -19,6 +19,7 @@ public class Claw extends SubsystemBase {
     }
 
     public void setSpeed(double closingSpeed) {
+        closingSpeed *= 0.2;
         var limitedRate = this.limiter.calculate(closingSpeed);
         this.motor.set(limitedRate);
     }

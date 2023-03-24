@@ -59,8 +59,10 @@ public class RobotContainer {
     final var arcadeDriveCommand = this.commandFactory.getArcadeDriveCommand();
     // Configure default commands
     m_driveTrain.setDefaultCommand(arcadeDriveCommand);
-
-    /* 
+    /*this.arm.getShoulder().setDefaultCommand(this.commandFactory.getDriveShoulderCommand(()->-this.xboxController1.getLeftY()));
+    this.arm.getElbow().setDefaultCommand(this.commandFactory.getDriveElbowCommand(()->-this.xboxController1.getRightY()));
+    this.arm.getClaw().setDefaultCommand(this.commandFactory.getDriveClawCommand(this.joystick::getY));
+     
     this.shoulder.setDefaultCommand(this.commandFactory.getDriveShoulderCommand(() -> -this.joystick.getY()));
     this.elbow.setDefaultCommand(this.commandFactory.getDriveElbowCommand(this.joystick::getTwist));
     this.claw.setDefaultCommand(this.commandFactory.getDriveClawCommand(

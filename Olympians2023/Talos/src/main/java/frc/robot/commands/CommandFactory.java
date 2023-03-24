@@ -70,18 +70,19 @@ public final class CommandFactory {
         }, arm);
     }
 
+*/
     public Command getDriveShoulderCommand(DoubleSupplier speedSupplier) {
-        return Commands.run(() -> this.bot.getShoulder().driveShoulder(speedSupplier.getAsDouble()), bot.getShoulder());
+        return Commands.run(() -> this.bot.getArm().getShoulder().drive(speedSupplier.getAsDouble()), bot.getArm().getShoulder());
     }
 
     public Command getDriveElbowCommand(DoubleSupplier speedSupplier){
-        return Commands.run(() -> this.bot.getElbow().drive(speedSupplier.getAsDouble()), bot.getElbow());
+        return Commands.run(() -> this.bot.getArm().getElbow().drive(speedSupplier.getAsDouble()), bot.getArm().getElbow());
     }
 
     public Command getDriveClawCommand(DoubleSupplier speedSuppler) {
-        return Commands.run(() -> this.bot.getClaw().drive(speedSuppler.getAsDouble()), this.bot.getClaw());
+        return Commands.run(() -> this.bot.getArm().getClaw().setSpeed(speedSuppler.getAsDouble()), this.bot.getArm().getClaw());
     }
-    */
+    
 
     private Command getArcadeDriveCommand(int rotationAxis, String arcadeMode,
             String rumblePattern) {

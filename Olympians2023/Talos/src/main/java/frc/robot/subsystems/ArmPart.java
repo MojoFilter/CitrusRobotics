@@ -48,7 +48,7 @@ public abstract class ArmPart extends TunablePIDSubsystem {
     }
 
     public void drive(double speed) {
-        this.motor.set(speed);
+        this.motor.set(speed * .2);
     }
 
     public DutyCycleEncoder getEncoder() {
