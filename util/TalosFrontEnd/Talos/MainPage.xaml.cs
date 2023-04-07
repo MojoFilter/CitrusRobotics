@@ -4,6 +4,7 @@
         public MainPage(IMainViewModel viewModel)
         {
             this.viewModel = viewModel;
+            this.BindingContext = viewModel;
             InitializeComponent();
         }
 
@@ -26,16 +27,25 @@
         private readonly SerialDisposable subscriptionContainer = new SerialDisposable();
 
         private async void SettingsClicked(object sender, EventArgs e) {
-            var popup = new SettingsPopup(this.viewModel.Host, this.viewModel.Settings);
+            var popup = new SettingsPopup(
+                this.viewModel.Host,
+               this.viewModel.Settings,
+               this.viewModel.Locales,
+               this.viewModel.Locale);
             var result = await this.ShowPopupAsync(popup);
-            if (result is string newHost) {
-                this.viewModel.Host = newHost;
-                this.Connect();
+            if (result is SettingsPopup.Settings settings) {
+                this.viewModel.Host = settings.Host;
+                this.viewModel.Locale = settings.locale;
+                //this.Connect();
             }
         }
 
         private void Connect() {
             this.subscriptionContainer.Disposable = this.viewModel.Connect().Subscribe(this.PlayFile);
         }
+
+        //private async void Button_Clicked(object sender, EventArgs e) {
+        //    await this.viewModel.Say(this.ttsEntry.Text);
+        //}
     }
 }

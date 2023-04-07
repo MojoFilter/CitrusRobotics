@@ -18,6 +18,14 @@
                         Title="Host"
                         WidthRequest="150"/>
             </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Voice"
+                       Margin="12,12,6,12" />
+                <Picker x:Name="localePicker"
+                         Title="Voice"
+                        ItemDisplayBinding="{Binding Name}"
+                         WidthRequest="300" />
+            </HorizontalStackLayout>
             <Button HorizontalOptions="End"
                     Margin="6,12,12,12"
                     Text="Save"

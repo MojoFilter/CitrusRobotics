@@ -77,10 +77,36 @@ public sealed class NetworkTablesClient : INetworkTablesClient
            }))
         .Switch();
 
+
+    //public async Task<IPublisher<string>> CreateStringPublisher(string topic, CancellationToken cancellationToken = default) {
+    //    var pubuid = Interlocked.Increment(ref this.publishId);
+    //    var type = "string";
+    //    var msg = new[] {
+    //        new TextDto(Methods.Publish, new {
+    //            name = topic,
+    //            pubuid,
+    //            type
+    //        })
+    //    };
+    //    using MemoryStream ms = new();
+    //    await JsonSerializer.SerializeAsync(ms, msg, cancellationToken: cancellationToken);
+    //    if (client is { }) {
+    //        await this.client.SendAsync(ms.ToArray(), WebSocketMessageType.Text, true, cancellationToken);
+    //    }
+    //    return new Publisher<string>();
+    //}
+
+    private async Task SendTimeUpdates(CancellationToken cancellationToken) {
+        var timer = new PeriodicTimer(TimeSpan.FromSeconds(2.0));
+        while (await timer.WaitForNextTickAsync(cancellationToken)) {
+
+        }
+    }
+
     private async Task ReceiveMessagesAsync(CancellationToken cancellationToken)
     {
         ArraySegment<byte> readBuffer = new(new byte[BufferSize]);
-        while (!cancellationToken.IsCancellationRequested)
+        while (!cancellationToken.IsCancellationRequested && this.client is { })
         {
             using MemoryStream ms = new();
             WebSocketReceiveResult result;
@@ -117,9 +143,20 @@ public sealed class NetworkTablesClient : INetworkTablesClient
         };
         using MemoryStream ms = new();
         await JsonSerializer.SerializeAsync(ms, msg, cancellationToken: cancellationToken);
-        var json = Encoding.UTF8.GetString(ms.ToArray());
-        this.textMessagesSubject.OnNext($"Sent: {json}");
-        await this.client.SendAsync(ms.ToArray(), WebSocketMessageType.Text, true, cancellationToken);
+        //var json = Encoding.UTF8.GetString(ms.ToArray());
+        //this.textMessagesSubject.OnNext($"Sent: {json}");
+        if (client is { }) {
+            await this.client.SendAsync(ms.ToArray(), WebSocketMessageType.Text, true, cancellationToken);
+        }
+    }
+
+    private async Task SendMessagePackAsync(CancellationToken cancellationToken) {
+        if (this.client is { }) {
+            var frame = new DataFrame() { };
+            using MemoryStream stream = new MemoryStream();
+            await MessagePackSerializer.SerializeAsync(stream, frame, cancellationToken: cancellationToken);
+            await this.client.SendAsync(stream.ToArray(), WebSocketMessageType.Binary, true, cancellationToken);
+        }
     }
 
     private async Task ProcessTextMessageAsync(Stream inputStream, CancellationToken cancellationToken)
@@ -196,6 +233,7 @@ public sealed class NetworkTablesClient : INetworkTablesClient
     private uint? serverPubId;
     private Task? receiveTask;
     private ClientWebSocket? client;
+    private int publishId = 0;
 
     private readonly ObservableCollection<string> topics = new ObservableCollection<string>();
     private readonly ISubject<TopicData> topicDataSubject = new Subject<TopicData>();
@@ -216,10 +254,25 @@ public sealed class NetworkTablesClient : INetworkTablesClient
     private record class TopicData(string Topic, ReadOnlyMemory<byte> RawValue);
     private record class TextDto(string method, object @params);
 
+    private class Publisher<T> : IPublisher<T> {
+
+        public Publisher(Func<T, CancellationToken, Task> write){
+            this.write = write;
+        }
+
+        public void Dispose() {
+        }
+
+        public Task WriteAsync(T value, CancellationToken cancellationToken) => this.write(value, cancellationToken);
+
+        private readonly Func<T, CancellationToken, Task> write;
+    }
+
     private static class Methods
     {
         public const string Announce = "announce";
         public const string Subscribe = "subscribe";
+        public const string Publish = "publish";
     }
 
     private static class KnownTopics

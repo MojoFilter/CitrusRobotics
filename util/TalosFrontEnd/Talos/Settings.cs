@@ -7,9 +7,10 @@ public interface ISettings {
 
 internal class Settings : ISettings {
     public IReadOnlyList<string> Hosts { get; } = new[] {
+        "jweeks-spector",
         "roborio-9300-frc",
         "10.93.00.02",
-        "clio"
+        "clio",
     };
 
     public string DefaultHost => Hosts.FirstOrDefault();

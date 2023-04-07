@@ -19,6 +19,23 @@
 
             <toolkit:MediaElement x:Name="player" />
 
+            <!--<Entry x:Name="ttsEntry"
+                   Text="Say some of this shit"/>
+            <Label>Pitch</Label>
+            <Slider Minimum="0"
+                    Maximum="2.0"
+                    Value="{Binding Pitch}"/>
+            <Label>Volume</Label>
+            <Slider Minimum="0.0"
+                    Maximum="1.0"
+                    Value="{Binding Volume}" />
+            <Label>Locale</Label>
+            <Picker ItemsSource="{Binding Locales}"
+                    SelectedItem="{Binding Locale, Mode=TwoWay}"
+                    ItemDisplayBinding="{Binding Name}"/>
+            <Button Text="Say"
+                    Clicked="Button_Clicked"/>-->
+
 
         </VerticalStackLayout>
     </ScrollView>
